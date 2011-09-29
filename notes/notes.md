@@ -53,3 +53,26 @@ even though mixins don't typically need events they're built in via inheritance.
 that needs events (like say a controller) it has them available. More on the command chains when I get to re-coding those
 classes.
 
+Now the next class in the inheritance chain of Nooku is `KObject` pretty much everything we see in Nooku inherits from it at
+some point. It provides some interesting things, that I'll get to later but for now lets focus on the constructor.
+
+```php
+public function __construct( KConfig $config = null) 
+{
+  # code stuff  
+}
+```   
+
+Pretty much every classes constructor in Nooku takes a KConfig object, so its pretty damn integral. What exactly is KConfig
+and how does it work? If we open up `koowa/config.php` will not it implements `IteratorAggregate, ArrayAccess, Countable`
+these are all core PHP classes. PHP's OOP is pretty messed up so to treat some like an array we need to implement the correct
+classes. 
+
+InteratorAggregate makes KConfig [traversable](http://www.php.net/manual/en/class.traversable.php), which means you can do a
+foreach loop on the object. [ArrayAccess](http://php.net/manual/en/class.arrayaccess.php) emulates array like methods/access,
+i.e `$config['']`. And [Countable](http://php.net/manual/en/class.countable.php) makes `count($config)` work.
+
+This makes KConfig very powerful. If we think of the way we use config objects, iteration will be very useful.  
+
+KConfig ultimately matains this data in the $_data array. When we try to access anything (e.g via fluent interfaces
+$config->table = 'awesometable') or loop over it we are hitting methods that abstract away this fact.   
