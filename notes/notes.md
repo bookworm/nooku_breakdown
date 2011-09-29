@@ -86,5 +86,22 @@ __set or __get.
 These methods ultimately alias abstractions over arrays. You might have a array of values; calling $obj->set() will in turn
 hit the overload which then saves the values to correct place (the array).       
 
-If we move 
+Next up we have `mixin()` this takes a `KMixinInterface` object and creates a list of methods in the class:
 
+```php
+foreach($methods as $method) {
+  $this->_mixed_methods[$method] = $object;
+} 
+```
+
+Then it makes a call to `$object->setMixer($this);`. Lets take a loot at `koowa/mixin/abstract.php`. It doesn't look to be
+all that interesting, its just your classic decorator pattern. What is interesting though is all the different types of
+mixin objects, `commandchain`, `eventdispatcher`, `callback` etc. I'm curious to see in waht context these are typically
+used lets examine them one by one. 
+
+{::note} Interesting discovery in `__call` of `KMixinAbastract`. Apparently `Call_user_func_array is ~3 times slower than
+direct method calls.`. Learn something new everyday. {:/note}  
+
+`KMixinCommandchain` seems to really be a wrapper around `KMixinCallback` and `KCommandChain` looking at the other classes
+reveals the same similar wrapping scheme. These extra classes seem to be a way of allowing one to mixin complex objects like
+CommandChains and events. How this ultimately works is yet to be seen.
