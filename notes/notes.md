@@ -111,13 +111,20 @@ CommandChains and events. How this ultimately works is yet to be seen.
 
 Back at KObject lets look at the mixin function again. Lets do a search through the code for `mixin(` and see if it turns up
 anything of interest. It appears to used internally only in two contexts behaviors and command chains. Behaviors are
-essentially nothing than mixins. command chains are...
+essentially nothing than mixins. 
 
-{::note} I dislike the term command chain it really should be called and observer pattern. The result terminology is usually
-clearer in the end. To me add() + run() are so much more confusing than terms like subscribe and publish. Its a matter of
-taste though. {:/note}
+Command chains route stuff through a series of handling functions until one of them can execute the command. 
 
+{::note} I dislike the term command chain it really should be called an observer pattern. The resulting terminology is
+usually clearer in the end. To me add() + run() are so much more confusing than terms like subscribe and publish. Its a
+matter of taste though. {:/note}
 
-Whats the different between event dispatchers and command chains? At the moment I've no fucking idea. Need to dig into this
+Whats the difference between event dispatchers and command chains? At the moment I've no fucking idea. Need to dig into this
 later. My intuition says command chains are just a more simplistic version of events. Events can propagate etc. Events don't
 appear to be used internally. Strange. Are controller events command chains?
+
+A google search turned up some discussion and clarified the difference between a command chain and an observer pattern.
+[here](http://www.willfitch.com/the-chain-of-command-pattern-oop-techniques-in-php.html). It now appears to me that the
+events system is an observer pattern. Bingo! The miracle of understanding. The biggest difference betweencomamnd chains and events is that command chains just find the correct method to execute then run it; events execute all the callbacks.
+
+
