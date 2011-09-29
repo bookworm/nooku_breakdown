@@ -21,8 +21,8 @@ interface KObjectHandlable
 ```            
 
 Now this is just an interface, you'll see allot of this convention in Nooku. Its a good convention to follow, it documents
-the API a class has without actually needing the code. Sure every class could have getHandle() but how would you know what
-classes have it? Its better to just see the implements keyword and know this class will have it.   
+the API a class has without actually needing the code. Sure every class could have `getHandle()` but how would you know what
+classes have it? Its better to just see the implements keyword and know that the class will have that particular function.   
 
 Now according to the function docs this is used for hashing the object. I'm betting this is used in the context of mixins.
 Mixins in php are accomplished using a `__call` overload and then you maintain the objects to mixed in an array associated by
@@ -41,8 +41,15 @@ public function getHandle()
 }
 ```          
 
-Now spl_object_hash is interesting, its personally my first time
-encountering it. It seems to be something php is aware itself, which means it might have some capability for retrieving the
-object directly from memory. {::note} That doesn't seem to be true. `When an object is destroyed, its hash may be reused for
-other objects.` That leads me to believe even if its possible, it wouldn't be reliable anyway. Nevertheless, its a
-standardized & canon way of creating a hash for a php object and thus probably optimized performance. {:/note}
+Now spl_object_hash is interesting, its personally my first time encountering it. It seems to be something php is aware of
+itself, which means it might have some capability for retrieving the object directly from memory. {::note} That doesn't seem
+to be true. `When an object is destroyed, its hash may be reused for other objects.` That leads me to believe even if its
+possible, it wouldn't be reliable anyway. Nevertheless, its a standardized & canon way of creating a hash for a php object
+and thus probably optimized performance. {:/note}    
+
+
+A quick search for `getHandle(` reveals a mostly mixin and command chain usage. Again some pretty neat usage of inheritance,
+even though mixins don't typically need events they're built in via inheritance. This means when you actually create a class
+that needs events (like say a controller) it has them available. More on the command chains when I get to re-coding those
+classes.
+

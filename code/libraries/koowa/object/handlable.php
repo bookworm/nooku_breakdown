@@ -2,5 +2,5 @@
 
 interface KObjectHandlable
 {
-	public function getHandle();
+  public function getHandle();
 }
