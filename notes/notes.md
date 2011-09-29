@@ -125,6 +125,32 @@ appear to be used internally. Strange. Are controller events command chains?
 
 A google search turned up some discussion and clarified the difference between a command chain and an observer pattern.
 [here](http://www.willfitch.com/the-chain-of-command-pattern-oop-techniques-in-php.html). It now appears to me that the
-events system is an observer pattern. Bingo! The miracle of understanding. The biggest difference betweencomamnd chains and events is that command chains just find the correct method to execute then run it; events execute all the callbacks.
+events system is an observer pattern. Bingo! The miracle of understanding. The biggest difference between comamnd chains and
+events is that command chains just find the correct method to execute then run it; events execute all the callbacks.
+
+
+Lets move onto object/identifiable.php. This is an important interface, its used throughout Nooku, to well, identify things.
+Its used extensively in the KFactory for loading, instantiating, caching objects etc. The interface only defines one method
+`getIdentifier()` lets do a search through koowa for it.   
+
+The first usage I see for it is simply as a key in associative arrays. No more firguing out what object instance should
+renamed before throwing it in an array. That functionality should really be within the object, not determined inside another
+object.
+
+Example:          
+
+```php
+//Add the behaviors
+$this->_behaviors[$behavior->getIdentifier()->name] = $behavior;
+```
+
+Looking in some of the getIdentifier methods we typically see `return $this->_identifier;` and the above `->name` property
+implies that an identifier is usually an object. What is this object then?     
+
+Turns out even an identifier is an object in Nooku; quite a lot of abstraction isn't it? in identifier/identifier.php we
+find some neat stuff. It turns out that KIdentifier is responsible for keeping track of the path to objects file, the
+application it belongs to, the type etc. There is a special __tostring method deifned that returns the typical identifier
+string `[application::]type.package.[.path].name` this string is split at the dots into parts. The last part goes into
+$this->name, which we see above.     
 
 
