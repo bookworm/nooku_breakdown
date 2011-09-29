@@ -74,5 +74,16 @@ i.e `$config['']`. And [Countable](http://php.net/manual/en/class.countable.php)
 
 This makes KConfig very powerful. If we think of the way we use config objects, iteration will be very useful.  
 
-KConfig ultimately matains this data in the $_data array. When we try to access anything (e.g via fluent interfaces
+KConfig ultimately maintains this data in the $_data array. When we try to access anything (e.g via fluent interfaces
 $config->table = 'awesometable') or loop over it we are hitting methods that abstract away this fact.   
+
+
+Back at KObject we move onto the the `set` and `get` methods. The allow you to set and get instance variables. These are
+interesting because they don't actually provide anything very usable without corresponding overload methods. Sure, you can
+use them to set protected values but thats about it alone. The power comes later when you've have a class that overloads
+__set or __get.
+
+These methods ultimately alias abstractions over arrays. You might have a array of values; calling $obj->set() will in turn
+hit the overload which then saves the values to correct place (the array).       
+
+
