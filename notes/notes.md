@@ -25,12 +25,14 @@ the API a class has without actually needing the code. Sure every class could ha
 classes have it? Its better to just see the implements keyword and know that the class will have that particular function.   
 
 Now according to the function docs this is used for hashing the object. I'm betting this is used in the context of mixins.
-Mixins in php are accomplished using a `__call` overload and then you maintain the objects to mixed in an array associated by
-the object to be mixed in. When you call a method its looked up in the array, the object is checked to see if it has that
-method and then called if it does. 
+Mixins in php are accomplished using a `__call` overload and then you maintain the objects to mixed in an array associated
+by the object to be mixed in. When you call a method its looked up in the array, the object is checked to see if it has that
+method and then called if it does.
 
-{::see} This is usually referred to as decorator pattern. Check out [here](http://giorgiosironi.blogspot.com/2010/01/practical-php-patterns-decorator.html) and [this](http://www.jasny.net/articles/how-i-php-multiple-inheritance/). The latter has an interesting discussion. As always searching on stackoverflow for the subject is a good way to learn 
-{:/see}
+{::see} This is usually referred to as decorator pattern. Check out
+[here](http://giorgiosironi.blogspot.com/2010/01/practical-php-patterns-decorator.html) and
+[this](http://www.jasny.net/articles/how-i-php-multiple-inheritance/). The latter has an interesting discussion. As always
+searching on stackoverflow for the subject is a good way to learn {:/see}
            
 In koowa/object/object.php we find the following:
 
@@ -65,12 +67,13 @@ public function __construct( KConfig $config = null)
 
 Pretty much every classes constructor in Nooku takes a KConfig object, so its pretty damn integral. What exactly is KConfig
 and how does it work? If we open up `koowa/config.php` will not it implements `IteratorAggregate, ArrayAccess, Countable`
-these are all core PHP classes. PHP's OOP is pretty messed up so to treat some like an array we need to implement the correct
-classes. 
+these are all core PHP classes. PHP's OOP is pretty messed up so to treat some like an array we need to implement the
+correct classes.
 
 InteratorAggregate makes KConfig [traversable](http://www.php.net/manual/en/class.traversable.php), which means you can do a
-foreach loop on the object. [ArrayAccess](http://php.net/manual/en/class.arrayaccess.php) emulates array like methods/access,
-i.e `$config['']`. And [Countable](http://php.net/manual/en/class.countable.php) makes `count($config)` work.
+foreach loop on the object. [ArrayAccess](http://php.net/manual/en/class.arrayaccess.php) emulates array like
+methods/access, i.e `$config['']`. And [Countable](http://php.net/manual/en/class.countable.php) makes `count($config)`
+work.
 
 This makes KConfig very powerful. If we think of the way we use config objects, iteration will be very useful.  
 
@@ -104,4 +107,17 @@ direct method calls.`. Learn something new everyday. {:/note}
 
 `KMixinCommandchain` seems to really be a wrapper around `KMixinCallback` and `KCommandChain` looking at the other classes
 reveals the same similar wrapping scheme. These extra classes seem to be a way of allowing one to mixin complex objects like
-CommandChains and events. How this ultimately works is yet to be seen.
+CommandChains and events. How this ultimately works is yet to be seen.       
+
+Back at KObject lets look at the mixin function again. Lets do a search through the code for `mixin(` and see if it turns up
+anything of interest. It appears to used internally only in two contexts behaviors and command chains. Behaviors are
+essentially nothing than mixins. command chains are...
+
+{::note} I dislike the term command chain it really should be called and observer pattern. The result terminology is usually
+clearer in the end. To me add() + run() are so much more confusing than terms like subscribe and publish. Its a matter of
+taste though. {:/note}
+
+
+Whats the different between event dispatchers and command chains? At the moment I've no fucking idea. Need to dig into this
+later. My intuition says command chains are just a more simplistic version of events. Events can propagate etc. Events don't
+appear to be used internally. Strange. Are controller events command chains?
