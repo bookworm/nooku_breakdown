@@ -86,4 +86,5 @@ __set or __get.
 These methods ultimately alias abstractions over arrays. You might have a array of values; calling $obj->set() will in turn
 hit the overload which then saves the values to correct place (the array).       
 
+If we move 
 
