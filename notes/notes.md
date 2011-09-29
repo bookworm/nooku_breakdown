@@ -154,3 +154,42 @@ string `[application::]type.package.[.path].name` this string is split at the do
 $this->name, which we see above.     
 
 
+I mentioned that Identifiers are used allot in KFactory, I think its time to examine KFactory. The first thing you
+should know about the factory is that its static. Everything is an class method and not an instance method. The registry
+itself is stored in an static var. I'm not sure the exact reasoning for this because registries can easily be accomplished
+using singletons, but hopefully all will become clear later.
+
+The first things we see prevent instantiation:     
+
+```php
+final private function __construct(KConfig $config) 
+{ 
+  self::$_registry = new ArrayObject();
+  self::$_chain     = new KFactoryChain();      
+}
+final private function __clone() { }     
+```
+
+Then comes the singleton function `instantiate()` so we actually create instances at some point. A quick search turns up the
+line `KFactory::instantiate();` at the beginning of `factory/factory.php`. I think evry is static simply for the sake of
+API. It would be annoying (and needlessly complicated) to get $this scope to the factory or to create a global var. Its much
+better to just use static methods like `KFactory::get()` for example.            
+
+The first thing that stands out to me is $_chain, it looks interesting. Its an instance of ` new KFactoryChain(); ` which is
+a simple extension of KCommandChain. The question is how are command chains utilized in Kfactory?
+  
+Its first usage is in the addAdapter:
+
+```php
+public static function addAdapter(KFactoryAdapterInterface $adapter)
+{
+  self::$_chain->enqueue($adapter);
+}      
+```
+
+Command chains call things until one of the methods responds. Adapters are abstractions, you might have multiple ones
+"added" but only one should be used. All the adapters called via the command chain and each one can determine if they should
+respond.  
+
+
+
