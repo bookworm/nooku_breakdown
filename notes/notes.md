@@ -191,5 +191,31 @@ Command chains call things until one of the methods responds. Adapters are abstr
 "added" but only one should be used. All the adapters called via the command chain and each one can determine if they should
 respond.  
 
+The next interesting bit and the heart of the factory is `_instantiate()`. It actually instantiates the classes and returns
+them. First thing, the command chain is hit and a class name is generated. How this happens I'm not really sure. I think we
+need to dig down through what happens in a command chain.    
 
+It all starts with `$result = self::$_chain->run($identifier, $context);` we expect a string back. In fact if we get an
+object we return a KException:
 
+```php
+if(!is_object($result)) {
+  throw new KFactoryException('Cannot create object from identifier : '.$identifier);
+}       
+``` 
+
+So how do we get a string back? I've no idea. Lets find out. Remember everything in the chain is an adapter? So lets take a
+look at `factor/adapter/abstract`. If we llokc at the execute function we that it calls the adapters instantiate method.
+
+Lets open up `factory/adapter/component` and see what a typical adapter's `instantiate()` method looks like. The first thing
+it does is set the return value to false. This is important because a command needs to return false to fail. {::note} Thats
+not 100% accurate. `KCommandChain` has a concept called a break condition and technically it could be anything that can be
+compared with `===`. The break condition is almost always false though. You can look at `command/chain.php` around `line
+115` for:
+ 
+```php
+if ( $command->execute( $name, $context ) === $this->_break_condition) {
+  return $this->_break_condition;
+}   
+```   
+{:/note}
