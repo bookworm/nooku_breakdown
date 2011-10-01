@@ -238,4 +238,12 @@ then takes those methods and routes them to commands (with callbacks). Time to s
 
 It seems like everything in `http/` deadsl with the request/response headers. Mapping them to something meaningful.
 Request/Controller classes is where the actuall http shit really happens. It seems there is concept of response classes, these
-are the controllers.
+are the controllers.   
+
+Whats up with all those empty exception classes?
+
+```php
+class KHttpException extends KException {}
+```
+
+Curious. Maybe it just makes the code clearer so instead of throwing a general exception you knwo its an `KHttpException` ? Also could just be abstraction in case specific exception types need new features; no changing of code necessary in the future.
