@@ -246,4 +246,20 @@ Whats up with all those empty exception classes?
 class KHttpException extends KException {}
 ```
 
-Curious. Maybe it just makes the code clearer so instead of throwing a general exception you knwo its an `KHttpException` ? Also could just be abstraction in case specific exception types need new features; no changing of code necessary in the future.
+Curious. Maybe it just makes the code clearer so instead of throwing a general exception you knwo its an `KHttpException` ? Also could just be abstraction in case specific exception types need new features; no changing of code necessary in the future.     
+
+`KLoader` operates like a very simplified version of the factory. Its how 
+Koowa is loaded in the (in plugins/system/koowa.php) first place:
+
+```php
+// Require the library loader
+JLoader::import('libraries.koowa.koowa', JPATH_ROOT);
+JLoader::import('libraries.koowa.loader.loader', JPATH_ROOT);
+
+ //Setup the loader
+KLoader::addAdapter(new KLoaderAdapterKoowa(Koowa::getPath()));
+KLoader::addAdapter(new KLoaderAdapterJoomla(JPATH_LIBRARIES));
+KLoader::addAdapter(new KLoaderAdapterModule(JPATH_BASE));
+KLoader::addAdapter(new KLoaderAdapterPlugin(JPATH_ROOT));
+KLoader::addAdapter(new KLoaderAdapterComponent(JPATH_BASE));  
+```
