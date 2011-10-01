@@ -207,15 +207,28 @@ if(!is_object($result)) {
 So how do we get a string back? I've no idea. Lets find out. Remember everything in the chain is an adapter? So lets take a
 look at `factor/adapter/abstract`. If we llokc at the execute function we that it calls the adapters instantiate method.
 
-Lets open up `factory/adapter/component` and see what a typical adapter's `instantiate()` method looks like. The first thing
-it does is set the return value to false. This is important because a command needs to return false to fail. {::note} Thats
-not 100% accurate. `KCommandChain` has a concept called a break condition and technically it could be anything that can be
-compared with `===`. The break condition is almost always false though. You can look at `command/chain.php` around `line
-115` for:
+Lets open up `factory/adapter/component.php` and see what a typical adapter's `instantiate()` method looks like. The first
+thing it does is set the return value to false. This is important because a command needs to return false to fail. {::note}
+Thats not 100% accurate. `KCommandChain` has a concept called a break condition and technically it could be anything that
+can be compared with `===`. The break condition is almost always false though. You can look at `command/chain.php` around
+`line 115` for:
  
 ```php
 if ( $command->execute( $name, $context ) === $this->_break_condition) {
   return $this->_break_condition;
 }   
 ```   
-{:/note}
+{:/note}   
+
+What the component adapter seems to is basically determine the class name for an identifier. Remember fallbacks? Well, how
+do you instantiate a non existent class? You cant. You've to fallback to one that exists, this adapter determines what is
+the correct fallback class and returns. Then the identifier class name is set a path calculated and the file loaded. This
+means an identifier in the factory for say `admin::com.things.dispatcher` will actually hold/point to an instance of
+`ComDefaultDispatcher`.
+
+What is next for the journey into Nooku? Since the dispatcher is the place that everything goes through, lets start there.
+
+# The dispatcher
+
+Th dispatcher appears to be nothing more than an advanced command chain. Most everything is routed through `__call()` which
+then takes those methods and routes them to commands (with callbacks). Time to start re-coding.
