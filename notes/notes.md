@@ -232,3 +232,10 @@ What is next for the journey into Nooku? Since the dispatcher is the place that 
 
 Th dispatcher appears to be nothing more than an advanced command chain. Most everything is routed through `__call()` which
 then takes those methods and routes them to commands (with callbacks). Time to start re-coding.
+
+
+# Misc               
+
+It seems like everything in `http/` deadsl with the request/response headers. Mapping them to something meaningful.
+Request/Controller classes is where the actuall http shit really happens. It seems there is concept of response classes, these
+are the controllers.
