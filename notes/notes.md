@@ -236,19 +236,22 @@ then takes those methods and routes them to commands (with callbacks). Time to s
 
 # Misc               
 
-It seems like everything in `http/` deadsl with the request/response headers. Mapping them to something meaningful.
-Request/Controller classes is where the actuall http shit really happens. It seems there is concept of response classes, these
+It seems like everything in `http/` deals with the request/response headers. Mapping them to something meaningful.
+Request/Controller classes is where the actual http shit really happens. It seems there is concept of response classes, these
 are the controllers.   
 
-Whats up with all those empty exception classes?
+## Whats up with all those empty exception classes?
 
 ```php
 class KHttpException extends KException {}
 ```
 
-Curious. Maybe it just makes the code clearer so instead of throwing a general exception you knwo its an `KHttpException` ? Also could just be abstraction in case specific exception types need new features; no changing of code necessary in the future.     
+Curious. Maybe it just makes the code clearer so instead of throwing a general exception you knwo its an `KHttpException` ? Also
+could just be abstraction in case specific exception types need new features; no changing of code necessary in the future.   
 
-`KLoader` operates like a very simplified version of the factory. Its how 
+## KLoader
+
+It operates like a very simplified version of the factory. Its how 
 Koowa is loaded in the (in plugins/system/koowa.php) first place:
 
 ```php
@@ -262,4 +265,21 @@ KLoader::addAdapter(new KLoaderAdapterJoomla(JPATH_LIBRARIES));
 KLoader::addAdapter(new KLoaderAdapterModule(JPATH_BASE));
 KLoader::addAdapter(new KLoaderAdapterPlugin(JPATH_ROOT));
 KLoader::addAdapter(new KLoaderAdapterComponent(JPATH_BASE));  
-```
+```      
+
+## Toolbars
+
+Toolbars are rendered in a an interesting fashion. Rather than with a call to view helper they set & rendered in the controller by
+setting the buffer on JDocument.
+
+In `administrator/components/com_default/dispatcher.php`        
+
+```php
+$toolbar = KTemplateHelper::factory('toolbar', array(
+  'toolbar' => $this->getController()->getToolbar()
+));
+
+//Render the toolbar
+$document->setBuffer($toolbar->toolbar(), 'modules', 'toolbar');     
+$document->setBuffer($toolbar->title(), 'modules', 'title');    
+```    
