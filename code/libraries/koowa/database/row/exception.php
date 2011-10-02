@@ -1,3 +1,3 @@
 <?php 
 
-class KDatabaseRowException extends KDatabaseException {}
+class KDatabaseRowException extends KDatabaseException { }
