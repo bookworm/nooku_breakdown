@@ -2,21 +2,21 @@
 
 abstract class KDatabaseBehaviorAbstract extends KMixinAbstract implements KDatabaseBehaviorInterface
 {
-	protected $_identifier;
-	protected $_priority;  
-	
-	public function __construct(KConfig $config = null) 
-	{ 
-  	$this->_identifier = $config->identifier;
-  	parent::__construct($config);
-	
-  	$this->_priority = $config->priority;
-	
-  	if($config->auto_mixin) 
-  		$this->mixin($this);       
-	}      
-	
-	protected function _initialize(KConfig $config)
+  protected $_identifier;
+  protected $_priority;  
+  
+  public function __construct(KConfig $config = null) 
+  { 
+    $this->_identifier = $config->identifier;
+    parent::__construct($config);
+  
+    $this->_priority = $config->priority;
+  
+    if($config->auto_mixin) 
+      $this->mixin($this);       
+  }      
+  
+  protected function _initialize(KConfig $config)
   {
     $config->append(array(
       'priority'   => KCommand::PRIORITY_NORMAL,
@@ -27,17 +27,17 @@ abstract class KDatabaseBehaviorAbstract extends KMixinAbstract implements KData
   }  
   
   public function getIdentifier()
-	{
-		return $this->_identifier;
-	}
+  {
+    return $this->_identifier;
+  }
 
-	public function getPriority()
-	{
-		return $this->_priority;
-	} 
-	
-	final public function execute($name, KCommandContext $context) 
-	{
+  public function getPriority()
+  {
+    return $this->_priority;
+  } 
+  
+  final public function execute($name, KCommandContext $context) 
+  {
     $identifier = clone $context->caller->getIdentifier();
     $type       = array_pop($identifier->path);
 
@@ -53,9 +53,9 @@ abstract class KDatabaseBehaviorAbstract extends KMixinAbstract implements KData
     }
 
     return true;    
-	}        
-	
-	public function save()
+  }        
+  
+  public function save()
   {
     $this->getTable()->getCommandChain()->disable();
     $this->_mixer->save();    
