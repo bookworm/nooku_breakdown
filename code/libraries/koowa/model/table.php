@@ -50,7 +50,7 @@ class KModelTable extends KModelAbstract
     if($this->_table !== false)
     {
       if(!($this->_table instanceof KDatabaseTableAbstract))
-      {   		        
+      {               
         if(!($this->_table instanceof KIdentifier))
           $this->setTable($this->_table);  
         try {
@@ -89,11 +89,11 @@ class KModelTable extends KModelAbstract
   }    
   
   public function isConnected()
-	{
+  {
     return (bool) $this->getTable();
-	}     
-	
-	public function getItem()
+  }     
+  
+  public function getItem()
   {
     if(!isset($this->_item))
     {
