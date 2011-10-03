@@ -1,3 +1,3 @@
 <?php
 
-class KHelperException extends KException {}
+class KHelperException extends KException { }
