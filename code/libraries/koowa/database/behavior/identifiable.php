@@ -3,9 +3,9 @@
 class KDatabaseBehaviorIdentifiable extends KDatabaseBehaviorAbstract
 {
   protected $_urand;
-	
-	public function getMixableMethods(KObject $mixer = null)
-	{
+  
+  public function getMixableMethods(KObject $mixer = null)
+  {
     $methods = array();
 
     if(isset($mixer->uuid))
@@ -14,17 +14,17 @@ class KDatabaseBehaviorIdentifiable extends KDatabaseBehaviorAbstract
     $this->_urand = @fopen ( '/dev/urandom', 'rb' );
 
     return $methods;    
-	}        
-	
-	protected function _beforeTableInsert(KCommandContext $context)
-	{
-		if(isset($this->uuid)) {
-			$hex = $this->getTable()->getColumn('uuid')->type == 'char' ? false : true;
-			$this->uuid  = $this->_uuid($hex);
-		}
-	}  
-	
-	protected function _uuid($hex = false) 
+  }        
+  
+  protected function _beforeTableInsert(KCommandContext $context)
+  {
+    if(isset($this->uuid)) {
+      $hex = $this->getTable()->getColumn('uuid')->type == 'char' ? false : true;
+      $this->uuid  = $this->_uuid($hex);
+    }
+  }  
+  
+  protected function _uuid($hex = false) 
   {
     $pr_bits = false;
     if(is_resource ( $this->_urand ))
