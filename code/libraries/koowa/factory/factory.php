@@ -10,94 +10,94 @@ class KFactory
   protected static $_mixin_map = array();  
   
   final private function __construct(KConfig $config) 
-	{ 
-		self::$_registry = new ArrayObject();
+  { 
+    self::$_registry = new ArrayObject();
     self::$_chain    = new KFactoryChain();
-	}        
-	
-	final private function __clone() { }
-	
-	public static function instantiate($config = array())
-	{
-		static $instance;
-		
-		if ($instance === NULL) 
-		{
-  		if(!$config instanceof KConfig) $config = new KConfig($config);
-  		$instance = new self($config);    
-		} 
-		
-		return $instance;
-	}         
-	
-	public static function identify($identifier)
-	{		
-		if(!is_string($identifier)) {
-			if($identifier instanceof KObjectIdentifiable) 
-  			$identifier = $identifier->getIdentifier();
-		} 
-		
-		$alias = (string) $identifier;
-		if(array_key_exists($alias, self::$_identifier_map))
-  		$identifier = self::$_identifier_map[$alias];
-		
-		if(is_string($identifier)) 
-  		$identifier = new KIdentifier($identifier);
-		
-		return $identifier;
-	}  
-	
-	public static function get($identifier, array $config = array())
-	{
-		$objIdentifier = self::identify($identifier);
-		$strIdentifier = (string) $objIdentifier;
-		
-		if(!self::$_registry->offsetExists($strIdentifier))
-		{
-			$instance = self::_instantiate($objIdentifier, $config);
-		
-			self::_mixin($strIdentifier, $instance);
-			self::$_registry->offsetSet($strIdentifier, $instance);
-		}
-		
-		return self::$_registry->offsetGet($strIdentifier);
-	}     
-	
-	public static function tmp($identifier, array $config = array())
-	{
-		$objIdentifier = self::identify($identifier);
-		$strIdentifier = (string) $objIdentifier;
-	          
-		$instance = self::_instantiate($objIdentifier, $config);   
-		
-		self::_mixin($strIdentifier, $instance);    
+  }        
+  
+  final private function __clone() { }
+  
+  public static function instantiate($config = array())
+  {
+    static $instance;
+    
+    if ($instance === NULL) 
+    {
+      if(!$config instanceof KConfig) $config = new KConfig($config);
+      $instance = new self($config);    
+    } 
+    
+    return $instance;
+  }         
+  
+  public static function identify($identifier)
+  {   
+    if(!is_string($identifier)) {
+      if($identifier instanceof KObjectIdentifiable) 
+        $identifier = $identifier->getIdentifier();
+    } 
+    
+    $alias = (string) $identifier;
+    if(array_key_exists($alias, self::$_identifier_map))
+      $identifier = self::$_identifier_map[$alias];
+    
+    if(is_string($identifier)) 
+      $identifier = new KIdentifier($identifier);
+    
+    return $identifier;
+  }  
+  
+  public static function get($identifier, array $config = array())
+  {
+    $objIdentifier = self::identify($identifier);
+    $strIdentifier = (string) $objIdentifier;
+    
+    if(!self::$_registry->offsetExists($strIdentifier))
+    {
+      $instance = self::_instantiate($objIdentifier, $config);
+    
+      self::_mixin($strIdentifier, $instance);
+      self::$_registry->offsetSet($strIdentifier, $instance);
+    }
+    
+    return self::$_registry->offsetGet($strIdentifier);
+  }     
+  
+  public static function tmp($identifier, array $config = array())
+  {
+    $objIdentifier = self::identify($identifier);
+    $strIdentifier = (string) $objIdentifier;
+            
+    $instance = self::_instantiate($objIdentifier, $config);   
+    
+    self::_mixin($strIdentifier, $instance);    
 
-		return $instance;
-	}  
-	
-	public static function set($identifier, $object)
-	{
-		$objIdentifier = self::identify($identifier);
-		$strIdentifier = (string) $objIdentifier;
-		
-		self::$_registry->offsetSet($strIdentifier, $object);
-	} 
-	
-	public static function del($identifier)
-	{
-		$objIdentifier = self::identify($identifier);
-		$strIdentifier = (string) $objIdentifier;
+    return $instance;
+  }  
+  
+  public static function set($identifier, $object)
+  {
+    $objIdentifier = self::identify($identifier);
+    $strIdentifier = (string) $objIdentifier;
+    
+    self::$_registry->offsetSet($strIdentifier, $object);
+  } 
+  
+  public static function del($identifier)
+  {
+    $objIdentifier = self::identify($identifier);
+    $strIdentifier = (string) $objIdentifier;
 
-		if(self::$_registry->offsetExists($strIdentifier)) {
-			self::$_registry->offsetUnset($strIdentifier);
-			return true;
-		}
+    if(self::$_registry->offsetExists($strIdentifier)) {
+      self::$_registry->offsetUnset($strIdentifier);
+      return true;
+    }
 
-		return false;
-	}  
-	
-	public static function has($identifier)
-	{
+    return false;
+  }  
+  
+  public static function has($identifier)
+  {
     try 
     {
       $objIdentifier = self::identify($identifier);
@@ -109,17 +109,17 @@ class KFactory
     }
 
     return $result; 
-	}   
-	
-	public static function map($alias, $identifier)
-	{		
-		$identifier = self::identify($identifier);
-		
-		self::$_identifier_map[$alias] = $identifier;
-	}    
-	
-	
-	public static function mix($identifiers, $mixins)
+  }   
+  
+  public static function map($alias, $identifier)
+  {   
+    $identifier = self::identify($identifier);
+    
+    self::$_identifier_map[$alias] = $identifier;
+  }    
+  
+  
+  public static function mix($identifiers, $mixins)
   {
     settype($identifiers, 'array');
     settype($mixins,      'array');
