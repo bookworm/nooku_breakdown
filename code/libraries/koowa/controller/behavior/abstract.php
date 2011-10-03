@@ -6,16 +6,16 @@ abstract class KControllerBehaviorAbstract extends KMixinAbstract implements KCo
   protected $_priority;  
   
   public function __construct( KConfig $config = null) 
-	{ 
+  { 
     $this->_identifier = $config->identifier;
     parent::__construct($config);
 
     $this->_priority = $config->priority;
 
     if($config->auto_mixin) $this->mixin($this);
-	}  
-	
-	protected function _initialize(KConfig $config)
+  }  
+  
+  protected function _initialize(KConfig $config)
   {
     $config->append(array(
       'priority'   => KCommand::PRIORITY_NORMAL,
@@ -36,7 +36,7 @@ abstract class KControllerBehaviorAbstract extends KMixinAbstract implements KCo
   }  
   
   public function execute($name, KCommandContext $context) 
-	{
+  {
     $identifier = clone $context->caller->getIdentifier();
     $type       = array_pop($identifier->path);
 
@@ -49,17 +49,15 @@ abstract class KControllerBehaviorAbstract extends KMixinAbstract implements KCo
     }
 
     return true; 
-	}    
-	
-	public function getHandle()
+  }    
+  
+  public function getHandle()
   {
     $methods = $this->getMethods();
 
-    foreach($methods as $method) 
-    {
-      if(substr($method, 0, 7) == '_before' || substr($method, 0, 6) == '_after') {
+    foreach($methods as $method) {
+      if(substr($method, 0, 7) == '_before' || substr($method, 0, 6) == '_after')
         return parent::getHandle(); 
-      }
     }
 
     return null;   
