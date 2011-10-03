@@ -2,46 +2,46 @@
 
 class KObjectDecorator extends KObject
 {
-private $__methods = array();
-protected $_object;
+  private $__methods = array();
+  protected $_object; 
 
-	public function __construct($object)
-	{
-		$this->_object = $object;
-	}
+  public function __construct($object)
+  {
+    $this->_object = $object;
+  }
 
-	public function getObject()
-	{
-		return $this->_object;
-	}
+  public function getObject()
+  {
+    return $this->_object;
+  }
 
-	public function setObject($object)
-	{
-		$this->_object = $object;
-		return $this;
-	}
+  public function setObject($object)
+  {
+    $this->_object = $object;
+    return $this;
+  }
 
-	public function getMethods()
-	{
-		if(!$this->__methods)
-		{
-			$methods = array();
-			$object  = $this->getObject();
+  public function getMethods()
+  {
+    if(!$this->__methods)
+    {
+      $methods = array();
+      $object  = $this->getObject();
 
-			if(!($object instanceof KObject)) 
-			{
-        $reflection	= new ReflectionClass($object);
+      if(!($object instanceof KObject)) 
+      {
+        $reflection = new ReflectionClass($object);
         foreach($reflection->getMethods() as $method) {
           $methods[] = $method->name;
         }  
-   		} 
-   		else $methods = $object->getMethods();
-     		
-   		$this->__methods = array_merge(parent::getMethods(), $methods);
-		}
-     	
-		return $this->__methods;
-	}
+      } 
+      else $methods = $object->getMethods();
+        
+      $this->__methods = array_merge(parent::getMethods(), $methods);
+    }
+      
+    return $this->__methods;
+  }
 
   public function inherits($class)
   {    
@@ -56,38 +56,38 @@ protected $_object;
     return $result;          
   }
 
-	public function __set($key, $value)
-	{
+  public function __set($key, $value)
+  {
     $this->getObject()->$key = $value;
-	}
+  }
 
-	public function __get($key)
-	{
-		return $this->getObject()->$key;
-	}
+  public function __get($key)
+  {
+    return $this->getObject()->$key;
+  }
 
-	public function __isset($key)
-	{
-		return isset($this->getObject()->$key);
-	}
+  public function __isset($key)
+  {
+    return isset($this->getObject()->$key);
+  }
 
-	public function __unset($key)
-	{
+  public function __unset($key)
+  {
     if (isset($this->getObject()->$key)) unset($this->getObject()->$key);
-	}
+  }
 
-	public function __call($method, array $arguments)
-	{
-		$object = $this->getObject();
+  public function __call($method, array $arguments)
+  {
+    $object = $this->getObject();
 
-		if($object instanceof KObject) {
-			$methods = $object->getMethods();
-			$exists  = in_array($method, $methods);
-		}
-		else $exists = method_exists($object, $method);
+    if($object instanceof KObject) {
+      $methods = $object->getMethods();
+      $exists  = in_array($method, $methods);
+    }
+    else $exists = method_exists($object, $method);
 
-		if($exists)
-		{
+    if($exists)
+    {
       $result = null;
 
       switch(count($arguments))
@@ -112,8 +112,8 @@ protected $_object;
       if ($result instanceof $class) return $this;
 
       return $result;
-		}
+    }
 
-		return parent::__call($method, $arguments);
-	}
+    return parent::__call($method, $arguments);
+  }
 }

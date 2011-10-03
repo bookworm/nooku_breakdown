@@ -51,7 +51,6 @@ class KIdentifier implements KIdentifierInterface
       if($property == 'path')
         if(is_scalar($value)) $value = (array) $value;   
 
-      //Set the basepath
       if($property == 'application')
       { 
         if(!isset(self::$_applications[$value]))

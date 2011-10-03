@@ -140,7 +140,6 @@ object.
 Example:          
 
 ```php
-//Add the behaviors
 $this->_behaviors[$behavior->getIdentifier()->name] = $behavior;
 ```
 

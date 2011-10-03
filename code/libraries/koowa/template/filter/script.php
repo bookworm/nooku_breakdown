@@ -47,7 +47,6 @@ class KTemplateFilterScript extends KTemplateFilterAbstract implements KTemplate
       $text = str_replace($matches[0], '', $text);   
     }
 
-    // get rid of inline and inline="true" in script tags
     $text = preg_replace('#<script\s*(?:inline="true"|inline)\s*#siU', '<script', $text);
 
     return $scripts; 

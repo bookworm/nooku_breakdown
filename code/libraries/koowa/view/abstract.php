@@ -124,7 +124,6 @@ abstract class KViewAbstract extends KObject implements KObjectIdentifiable
     	if(substr($route, 0, 10) == 'index.php?') 
     		$route = substr($route, 10);
 
-    	// Parse route
     	$parts = array();
     	parse_str($route, $parts);
     	$result = array();

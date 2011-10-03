@@ -77,7 +77,6 @@ class KObject implements KObjectHandlable
       $this->_mixed_methods[$method] = $object;
     }
 
-    //Set the mixer
     $object->setMixer($this);
 
     return $this;  

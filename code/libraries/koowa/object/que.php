@@ -100,35 +100,35 @@ class KObjectQueue extends KObject implements Iterator, Countable
   }       
   
   public function rewind() 
-	{
+  {
     reset($this->_object_list);
     reset($this->_priority_list);
 
     return $this;   
-	}    
-	
-	public function valid() 
-	{
-		return !is_null(key($this->_priority_list)); 
-	} 
+  }    
+  
+  public function valid() 
+  {
+    return !is_null(key($this->_priority_list)); 
+  } 
  
-	public function key() 
-	{
-		return key($this->_priority_list); 
-	} 
+  public function key() 
+  {
+    return key($this->_priority_list); 
+  } 
  
-	public function current() 
-	{
-		return $this->_object_list[$this->key()]; 
-	} 
+  public function current() 
+  {
+    return $this->_object_list[$this->key()]; 
+  } 
  
-	public function next() 
-	{
-		return next($this->_priority_list); 
-	}  
-	
-	public function top() 
-	{
+  public function next() 
+  {
+    return next($this->_priority_list); 
+  }  
+  
+  public function top() 
+  {
     $handles = array_keys((array)$this->_priority_list);
 
     $object = null;
@@ -137,8 +137,8 @@ class KObjectQueue extends KObject implements Iterator, Countable
     }
 
     return $object;   
-	} 
-	
+  } 
+  
   public function isEmpty()
   {
     return !count($this->_object_list);
