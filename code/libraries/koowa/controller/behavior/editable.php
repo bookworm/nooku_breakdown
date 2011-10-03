@@ -18,7 +18,7 @@ class KControllerBehaviorEditable extends KControllerBehaviorAbstract
   }  
   
   public function getReferrer()
-	{
+  {
     $identifier = $this->getMixer()->getIdentifier();
 
     $referrer = KFactory::tmp('lib.koowa.http.url', 
@@ -26,10 +26,10 @@ class KControllerBehaviorEditable extends KControllerBehaviorAbstract
     );
 
     return $referrer; 
-	}       
-	
-	public function setReferrer()
-	{								   
+  }       
+  
+  public function setReferrer()
+  {                  
     $identifier = $this->getMixer()->getIdentifier();
 
     if(!KRequest::has('cookie.referrer_'.md5(KRequest::referrer())))
@@ -48,16 +48,16 @@ class KControllerBehaviorEditable extends KControllerBehaviorAbstract
 
       KRequest::set('cookie.referrer_'.md5(KRequest::url()), (string) $referrer);  
     } 
-	}   
-	
-	public function unsetReferrer()
-	{								  
+  }   
+  
+  public function unsetReferrer()
+  {                 
     $identifier = $this->getMixer()->getIdentifier();
     KRequest::set('cookie.referrer_'.md5(KRequest::referrer()), null);  
-	}
-	
-	public function lockResource(KCommandContext $context)
-	{								
+  }
+  
+  public function lockResource(KCommandContext $context)
+  {               
     if($context->result instanceof KDatabaseRowInterface) 
     {
       $view = $this->getView();
@@ -67,26 +67,26 @@ class KControllerBehaviorEditable extends KControllerBehaviorAbstract
           $context->result->lock();
       }
     }    
-	}
-	
-	public function unlockResource(KCommandContext $context)
-	{								  
+  }
+  
+  public function unlockResource(KCommandContext $context)
+  {                 
     if($context->result instanceof KDatabaseRowInterface && $context->result->isLockable())
-  		$context->result->unlock();
-	}   
-	
-	protected function _actionSave(KCommandContext $context)
-	{
-		$action = $this->getModel()->getState()->isUnique() ? 'edit' : 'add';
-		$data   = $context->caller->execute($action, $context);
-	    
-		$this->setRedirect($this->getReferrer());
-		
-		return $data;
-	} 
-	
-	protected function _actionApply(KCommandContext $context)
-	{
+      $context->result->unlock();
+  }   
+  
+  protected function _actionSave(KCommandContext $context)
+  {
+    $action = $this->getModel()->getState()->isUnique() ? 'edit' : 'add';
+    $data   = $context->caller->execute($action, $context);
+      
+    $this->setRedirect($this->getReferrer());
+    
+    return $data;
+  } 
+  
+  protected function _actionApply(KCommandContext $context)
+  {
     $action = $this->getModel()->getState()->isUnique() ? 'edit' : 'add';
     $data   = $context->caller->execute($action, $context);
 
@@ -106,13 +106,13 @@ class KControllerBehaviorEditable extends KControllerBehaviorAbstract
     $this->setRedirect($url);
 
     return $data;  
-	}
-	
-	protected function _actionCancel(KCommandContext $context)
-	{
-		$data = $context->caller->execute('read', $context);
-		$this->setRedirect($this->getReferrer());
-	
-		return $data;
-	}
+  }
+  
+  protected function _actionCancel(KCommandContext $context)
+  {
+    $data = $context->caller->execute('read', $context);
+    $this->setRedirect($this->getReferrer());
+  
+    return $data;
+  }
 }
