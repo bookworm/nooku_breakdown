@@ -1,3 +1,3 @@
 <?php 
 
-class KIdentifierException extends KException {}
+class KIdentifierException extends KException { }
