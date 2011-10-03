@@ -64,14 +64,13 @@ class KMixinCallback extends KMixinAbstract implements KCommandInterface
   public function registerCallback($commands, $callback, $params = array())
   {
     $commands = (array) $commands;
-    $params  = (array) KConfig::toData($params); 
+    $params   = (array) KConfig::toData($params); 
     
     foreach($commands as $command)
     {
       $command = strtolower($command);
     
-      if(!isset($this->_callbacks[$command]) ) 
-      {
+      if(!isset($this->_callbacks[$command])) {
         $this->_callbacks[$command] = array();
         $this->_params[$command]   = array();   
       }        
