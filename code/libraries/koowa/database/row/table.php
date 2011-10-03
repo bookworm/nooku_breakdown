@@ -3,9 +3,9 @@
 class KDatabaseRowTable extends KDatabaseRowAbstract
 {
   protected $_table = false;
-	
-	public function __construct(KConfig $config = null)
-	{
+  
+  public function __construct(KConfig $config = null)
+  {
     parent::__construct($config);
 
     $this->_table = $config->table;
@@ -14,29 +14,29 @@ class KDatabaseRowTable extends KDatabaseRowAbstract
 
     if(isset($config->data))
       $this->setData($config->data->toArray(), $this->_new);
-	}   
-	
-	protected function _initialize(KConfig $config)
-	{
-		$config->append(array(
-      'table'	=> $this->_identifier->name
-		));
+  }   
+  
+  protected function _initialize(KConfig $config)
+  {
+    $config->append(array(
+      'table' => $this->_identifier->name
+    ));
 
-		parent::_initialize($config);
-	}    
-	
-	public function getTable()
+    parent::_initialize($config);
+  }    
+  
+  public function getTable()
   {
     if($this->_table !== false)
     {
       if(!($this->_table instanceof KDatabaseTableAbstract))
-      {   		        
+      {               
         if(!($this->_table instanceof KIdentifier))
           $this->setTable($this->_table);  
         try {
           $this->_table = KFactory::get($this->_table);
         } 
-        catch (KDatabaseTableException $e) {
+        catch(KDatabaseTableException $e) {
           $this->_table = false;
         } 
       } 
@@ -70,12 +70,12 @@ class KDatabaseRowTable extends KDatabaseRowAbstract
   }   
   
   public function isConnected()
-	{
+  {
     return (bool) $this->getTable();
-	} 
-	
-	public function load()
-	{
+  } 
+  
+  public function load()
+  {
     $result = null;
 
     if($this->_new)
@@ -98,10 +98,10 @@ class KDatabaseRowTable extends KDatabaseRowAbstract
     }
 
     return $result;   
-	}  
-	
-	public function save()
-	{
+  }  
+  
+  public function save()
+  {
     $result = false;
 
     if($this->isConnected())
@@ -121,9 +121,9 @@ class KDatabaseRowTable extends KDatabaseRowAbstract
   }                   
   
   public function delete()
-	{
-		$result = false;
-		
+  {
+    $result = false;
+    
     if($this->isConnected())
     {
       if(!$this->_new) 
@@ -137,11 +137,11 @@ class KDatabaseRowTable extends KDatabaseRowAbstract
       }  
     }     
 
-		return (bool) $result;
-	} 
-	
-	public function reset()
-	{
+    return (bool) $result;
+  } 
+  
+  public function reset()
+  {
     $result = parent::reset();
 
     if($this->isConnected())
@@ -153,22 +153,22 @@ class KDatabaseRowTable extends KDatabaseRowAbstract
     }
 
     return $result;
-	}
-	
-	public function count()
-	{
-		$result = false;
-	    
+  }
+  
+  public function count()
+  {
+    $result = false;
+      
     if($this->isConnected()) {
       $data   = $this->getTable()->filter($this->getData(true), true);
       $result = $this->getTable()->count($data);
     }
 
     return $result;   
-	}  
-	
-	public function __unset($column)
-	{
+  }  
+  
+  public function __unset($column)
+  {
     if($this->isConnected())
     {
       $field = $this->getTable()->getColumn($column);
@@ -178,10 +178,10 @@ class KDatabaseRowTable extends KDatabaseRowAbstract
       else
         parent::__unset($column);
     }
-	}   
-	
-	public function __call($method, array $arguments)
-	{ 
+  }   
+  
+  public function __call($method, array $arguments)
+  { 
     if($this->isConnected())
     {
       $parts = KInflector::explode($method);
@@ -204,5 +204,5 @@ class KDatabaseRowTable extends KDatabaseRowAbstract
     }
 
     return parent::__call($method, $arguments);   
-	}
+  }
 }
