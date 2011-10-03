@@ -2,23 +2,23 @@
 
 abstract class KModelAbstract extends KObject implements KObjectIdentifiable
 {
-	protected $_state;
-	protected $_total;
-	protected $_list;
-	protected $_item;
-	protected $_column; 
-	
-	public function __construct(KConfig $config = null)
-	{
+  protected $_state;
+  protected $_total;
+  protected $_list;
+  protected $_item;
+  protected $_column; 
+  
+  public function __construct(KConfig $config = null)
+  {
     if(!isset($config)) $config = new KConfig();
 
     parent::__construct($config);
 
     $this->_state = $config->state;
-	}
-	
-	protected function _initialize(KConfig $config)
-	{
+  }
+  
+  protected function _initialize(KConfig $config)
+  {
     $config->append(array(
       'state'      => KFactory::tmp('lib.koowa.model.state'),
     ));
@@ -27,22 +27,22 @@ abstract class KModelAbstract extends KObject implements KObjectIdentifiable
   }
   
   public function getIdentifier()
-	{
-		return $this->_identifier;
-	}
-	
-  public function isConnected()
-	{
-    return true;
-	} 
-	
-	public function set($property, $value = null)
   {
-  	if(is_object($property)) 
-    	$property = (array) KConfig::toData($property);
+    return $this->_identifier;
+  }
+  
+  public function isConnected()
+  {
+    return true;
+  } 
+  
+  public function set($property, $value = null)
+  {
+    if(is_object($property)) 
+      $property = (array) KConfig::toData($property);
 
-  	if(is_array($property)) $this->_state->setData($property); 
-  	else $this->_state->$property = $value;
+    if(is_array($property)) $this->_state->setData($property); 
+    else $this->_state->$property = $value;
 
     return $this;
   }

@@ -1,3 +1,3 @@
 <?php
 
-class KMixinException extends KException {}   
+class KMixinException extends KException { }   
