@@ -1,3 +1,3 @@
 <?php 
 
-class KHttpException extends KException {}
+class KHttpException extends KException { }
