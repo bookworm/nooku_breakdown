@@ -8,7 +8,7 @@ class KLoaderAdapterPlugin extends KLoaderAdapterAbstract
   { 
     $path = false; 
     
-    if (strpos($classname, $this->_prefix) === 0) 
+    if(strpos($classname, $this->_prefix) === 0) 
     { 
       $word  = strtolower(preg_replace('/(?<=\\w)([A-Z])/', '_\\1', $classname));
       $parts = explode('_', $word);
@@ -53,11 +53,10 @@ class KLoaderAdapterPlugin extends KLoaderAdapterAbstract
         else $path = strtolower($identifier->name); 
       }
         
-      if (is_file($this->_basepath.'/plugins/'.$type.'/'.$path.'/'.$path.'.php')) {
+      if(is_file($this->_basepath.'/plugins/'.$type.'/'.$path.'/'.$path.'.php')) 
         $path = $this->_basepath.'/plugins/'.$type.'/'.$path.'/'.$path.'.php';
-      } else {
+      else 
         $path = $this->_basepath.'/plugins/'.$type.'/'.$path.'.php';
-      }
     } 
     
     return $path;
