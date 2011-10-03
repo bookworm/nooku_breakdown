@@ -1,3 +1,3 @@
 <?php 
 
-class KConfigException extends KException {}
+class KConfigException extends KException { }
