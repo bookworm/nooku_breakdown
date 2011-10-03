@@ -1,3 +1,3 @@
 <?php
 
-class KFactoryException extends KException {}
+class KFactoryException extends KException { }
