@@ -8,7 +8,7 @@ class KLoaderAdapterModule extends KLoaderAdapterAbstract
   { 
     $path = false; 
     
-    if (strpos($classname, $this->_prefix) === 0) 
+    if(strpos($classname, $this->_prefix) === 0) 
     { 
       $word  = strtolower(preg_replace('/(?<=\\w)([A-Z])/', '_\\1', $classname));
       $parts = explode('_', $word);
@@ -46,7 +46,7 @@ class KLoaderAdapterModule extends KLoaderAdapterAbstract
       $parts = $identifier->path;
       $name  = $identifier->package;
       
-        if($identifier->basepath) $this->_basepath = $identifier->basepath;
+      if($identifier->basepath) $this->_basepath = $identifier->basepath;
         
       if(!empty($identifier->name))
       {
