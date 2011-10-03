@@ -4,13 +4,13 @@ class KCommandContext extends KConfig
 {
   protected $_error;
 
-  function setError($error) 
+  public function setError($error) 
   {
     $this->_error = $error;
     return $this;
   }
   
-  function getError() 
+  public function getError() 
   {
     return $this->_error;
   }
