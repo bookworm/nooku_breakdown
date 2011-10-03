@@ -100,8 +100,8 @@ class KDatabaseBehaviorSluggable extends KDatabaseBehaviorAbstract
     {   
       $db    = $table->getDatabase();
       $query = $db->getQuery()
-                ->select('slug')
-                ->where('slug', 'LIKE', $this->slug.'-%');          
+        ->select('slug')
+        ->where('slug', 'LIKE', $this->slug.'-%');          
 
       $slugs = $table->select($query, KDatabase::FETCH_FIELD_LIST);
 
