@@ -23,8 +23,8 @@ abstract class KDatabaseTableAbstract extends KObject implements KObjectIdentifi
     $this->_row         = $config->row;
     $this->_rowset      = $config->rowset; 
       
-    if(!$info = $this->getSchema()) {
-        throw new KDatabaseTableException('Table '.$this->_name.' does not exist');
+    if(!$info = $this->getSchema())
+      throw new KDatabaseTableException('Table '.$this->_name.' does not exist');
                
     if(!isset($config->identity_column)) 
     {

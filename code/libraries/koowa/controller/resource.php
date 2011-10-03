@@ -147,7 +147,13 @@ abstract class KControllerResource extends KControllerAbstract
     $this->_redirect_type    = $type;
 
     return $this;
-  }    
+  } 
+
+  protected function _actionGet(KCommandContext $context)
+  { 
+    $result = $this->getView()->display();   
+    return $result; 
+  }       
   
   public function __set($property, $value)
   {
