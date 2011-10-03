@@ -1,6 +1,3 @@
 <?php
 
-interface KDatabaseBehaviorInterface extends KCommandInterface, KObjectIdentifiable
-{
-  
-}
+interface KDatabaseBehaviorInterface extends KCommandInterface, KObjectIdentifiable { }
