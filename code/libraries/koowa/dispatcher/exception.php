@@ -1,3 +1,3 @@
 <?php
 
-class KDispatcherException extends KException {}
+class KDispatcherException extends KException { }
