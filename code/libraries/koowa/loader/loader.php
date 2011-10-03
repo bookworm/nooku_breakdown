@@ -26,9 +26,8 @@ class KLoader
 
     spl_autoload_register(array(__CLASS__, 'load'));
 
-    if (function_exists('__autoload')) {
+    if(function_exists('__autoload')) 
       spl_autoload_register('__autoload');
-    }    
   } 
   
   final private function __clone() { }
@@ -46,16 +45,15 @@ class KLoader
   {
     if((ctype_upper(substr($class, 0, 1)) || (strpos($class, '.') !== false)))
     {
-
-      if (class_exists($class, false) || interface_exists($class, false))
+      if(class_exists($class, false) || interface_exists($class, false))
         return true;  
  
       $result = self::path( $class );
 
-      if ($result !== false && !in_array($result, get_included_files()) && file_exists($result))
+      if($result !== false && !in_array($result, get_included_files()) && file_exists($result))
       {
         $mask = E_ALL ^ E_WARNING;
-        if (defined('E_DEPRECATED')) $mask = $mask ^ E_DEPRECATED;
+        if(defined('E_DEPRECATED')) $mask = $mask ^ E_DEPRECATED;
 
         $old = error_reporting($mask);
         $included = include $result;
@@ -92,7 +90,7 @@ class KLoader
       } 
     }
 
-    if ($result !== false) 
+    if($result !== false) 
     {
       $path = realpath($result);
       $result = $path !== false ? $path : $result;
