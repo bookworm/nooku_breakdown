@@ -1,5 +1,3 @@
 <?php
 
-class KControllerToolbarDefault extends KControllerToolbarAbstract
-{ 
-}
+class KControllerToolbarDefault extends KControllerToolbarAbstract { }
