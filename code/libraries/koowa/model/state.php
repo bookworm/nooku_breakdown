@@ -3,7 +3,7 @@
 class KModelState extends KModelAbstract
 {
   protected function _initialize(KConfig $config)
-	{
+  {
     $config->append(array(
       'state'      => array(),
     )); 
@@ -11,10 +11,10 @@ class KModelState extends KModelAbstract
   
   public function __get($name)
   {
-  	if(isset($this->_state[$name])) 
-    	return $this->_state[$name]->value;
+    if(isset($this->_state[$name])) 
+      return $this->_state[$name]->value;
 
-  	return null;
+    return null;
   }
   
   public function __set($name, $value)
