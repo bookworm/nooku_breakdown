@@ -2,14 +2,14 @@
 
 abstract class KFactoryAdapterAbstract extends KObject implements KFactoryAdapterInterface
 {
-	protected $_priority;
+  protected $_priority;
 
-	public function __construct( KConfig $config = null) 
-	{ 
+  public function __construct( KConfig $config = null) 
+  { 
     if(!isset($config)) $config = new KConfig();
     parent::__construct($config);
     $this->_priority = $config->priority;  
-	}
+  }
 
   protected function _initialize(KConfig $config)
   {
@@ -29,5 +29,5 @@ abstract class KFactoryAdapterAbstract extends KObject implements KFactoryAdapte
   public function getPriority()
   {
     return $this->_priority;
-	}
+  }
 }
