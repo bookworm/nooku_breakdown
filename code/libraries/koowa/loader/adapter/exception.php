@@ -1,3 +1,3 @@
 <?php  
 
-class KLoaderAdapterException extends KException {}
+class KLoaderAdapterException extends KException { }
