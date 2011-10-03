@@ -143,7 +143,7 @@ class KConfig implements IteratorAggregate, ArrayAccess, Countable
       {
         foreach($config as $value) 
         { 
-          if (!in_array($value, $this->_data, true)) {
+          if(!in_array($value, $this->_data, true)) {
             $this->_data[] = $value; 
           }      
         }  
