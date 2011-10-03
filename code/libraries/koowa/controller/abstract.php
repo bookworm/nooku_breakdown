@@ -28,8 +28,8 @@ abstract class KControllerAbstract extends KObject implements KObjectIdentifiabl
       'command_chain'     =>  new KCommandChain(),
       'dispatch_events'   => true,
       'enable_callbacks'  => true,
-      'dispatched'		=> false,
-      'request'		    => null,
+      'dispatched'    => false,
+      'request'       => null,
       'behaviors'         => array(),
     ));
 
@@ -122,26 +122,26 @@ abstract class KControllerAbstract extends KObject implements KObjectIdentifiabl
   }   
   
   public function getRequest()
-	{
-		return $this->_request;
-	}
+  {
+    return $this->_request;
+  }
 
-	public function setRequest(array $request)
-	{
-		$this->_request = new KConfig();
-		foreach($request as $key => $value) {
+  public function setRequest(array $request)
+  {
+    $this->_request = new KConfig();
+    foreach($request as $key => $value) {
       $this->$key = $value;
-		}
-		
-		return $this;
-	}       
-	
-	public function hasBehavior($behavior)
-	{ 
+    }
+    
+    return $this;
+  }       
+  
+  public function hasBehavior($behavior)
+  { 
     return isset($this->_behaviors[$behavior]); 
-	} 
-	
-	public function addBehavior($behaviors)
+  } 
+  
+  public function addBehavior($behaviors)
   { 
     $behaviors = (array) KConfig::toData($behaviors);
 
@@ -199,16 +199,16 @@ abstract class KControllerAbstract extends KObject implements KObjectIdentifiabl
   public function __set($property, $value)
   {
     $this->_request->$property = $value;
-	}     
-	
-	public function __get($property)
+  }     
+  
+  public function __get($property)
   {
-  	$result = null;   
-  	
-  	if(isset($this->_request->$property)) 
-    	$result = $this->_request->$property;
-  	
-  	return $result;
+    $result = null;   
+    
+    if(isset($this->_request->$property)) 
+      $result = $this->_request->$property;
+    
+    return $result;
   }    
   
   public function __call($method, $args)
