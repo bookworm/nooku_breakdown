@@ -536,7 +536,7 @@ abstract class KDatabaseTableAbstract extends KObject implements KObjectIdentifi
   }     
   
   public function __call($method, array $arguments)
-	{
+  {
     $parts = KInflector::explode($method);
 
     if($parts[0] == 'is' && isset($parts[1]))
@@ -548,5 +548,5 @@ abstract class KDatabaseTableAbstract extends KObject implements KObjectIdentifi
     }
 
     return parent::__call($method, $arguments);      
-	}
+  }
 }
