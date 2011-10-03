@@ -6,10 +6,10 @@ class KException extends Exception implements KExceptionInterface
   
   public function __construct($message = null, $code = KHttpResponse::INTERNAL_SERVER_ERROR, Exception $previous = null)
   {
-    if (!$message)
+    if(!$message)
       throw new $this('Unknown '. get_class($this));
 
-    if (version_compare(PHP_VERSION, '5.3.0', '<')) {
+    if(version_compare(PHP_VERSION, '5.3.0', '<')) {
       parent::__construct($message, (int) $code);     
       $this->_previous = $previous;        
     } 
