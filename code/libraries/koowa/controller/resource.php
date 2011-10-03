@@ -107,7 +107,7 @@ abstract class KControllerResource extends KControllerAbstract
         if(KInflector::isSingular($model)) 
           $model = KInflector::pluralize($model);    
 
-        $identifier     = clone $this->_identifier;
+        $identifier       = clone $this->_identifier;
         $identifier->path = array('model');
         $identifier->name = $model;    
       }
@@ -132,7 +132,7 @@ abstract class KControllerResource extends KControllerAbstract
     {
       $result = array(
         'url'     => JRoute::_($this->_redirect, false),
-        'message'   => $this->_redirect_message,
+        'message' => $this->_redirect_message,
         'type'    => $this->_redirect_type,          
       );    
     }
@@ -142,9 +142,9 @@ abstract class KControllerResource extends KControllerAbstract
   
   public function setRedirect( $url, $msg = null, $type = 'message')
   {
-    $this->_redirect       = $url;
+    $this->_redirect         = $url;
     $this->_redirect_message = $msg;
-    $this->_redirect_type  = $type;
+    $this->_redirect_type    = $type;
 
     return $this;
   }    
