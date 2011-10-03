@@ -3,7 +3,7 @@
 class KControllerBehaviorDiscoverable extends KControllerBehaviorAbstract
 {
   protected function _actionOptions(KCommandContext $context)
-	{
+  {
     $methods = array();
         
     $actions = array_diff($this->getActions(), array('browse', 'read', 'display'));
@@ -37,5 +37,5 @@ class KControllerBehaviorDiscoverable extends KControllerBehaviorAbstract
     }
 
     $context->headers = array('Allow' => $result); 
-	}
+  }
 }
