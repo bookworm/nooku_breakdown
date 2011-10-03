@@ -3,7 +3,7 @@
 class KControllerBehavior
 {
   public static function factory($behavior, $config = array())
-	{		
+  {   
     if(!($behavior instanceof KControllerBehaviorInterface))
     {   
       if(is_string($behavior) && strpos($behavior, '.') === false )
@@ -18,5 +18,5 @@ class KControllerBehavior
     }
 
     return $behavior;  
-	}
+  }
 }
