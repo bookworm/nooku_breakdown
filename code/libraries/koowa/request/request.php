@@ -55,7 +55,7 @@ class KRequest
   {
     static $instance;
 
-    if ($instance === NULL) {
+    if($instance === NULL) {
       if(!$config instanceof KConfig) $config = new KConfig($config);
       $instance = new self($config);
     }
@@ -73,9 +73,8 @@ class KRequest
       $result = $GLOBALS['_'.$hash];
       foreach($keys as $key)
       {
-        if(array_key_exists($key, $result)) { 
+        if(array_key_exists($key, $result))
           $result = $result[$key];
-        } 
         else {
           $result = null;
           break;
@@ -140,11 +139,11 @@ class KRequest
   {
     $result = '';
 
-    if (!isset(self::$_content) && isset($_SERVER['CONTENT_TYPE']))
+    if(!isset(self::$_content) && isset($_SERVER['CONTENT_TYPE']))
     {
       $type = $_SERVER['CONTENT_TYPE'];
 
-      if (is_string($type)) {
+      if(is_string($type)) {
         if (preg_match('/^([^,\;]*)/', $type, $matches)) 
           $type = $matches[1];
       }
@@ -152,7 +151,7 @@ class KRequest
       self::$_content['type'] = $type;
 
       $data = '';
-      if (isset($_SERVER['CONTENT_LENGTH']) && $_SERVER['CONTENT_LENGTH'] > 0)
+      if(isset($_SERVER['CONTENT_LENGTH']) && $_SERVER['CONTENT_LENGTH'] > 0)
       {
         $input = fopen('php://input', 'r');
         while ($chunk = fread($input, 1024)) {
@@ -170,17 +169,17 @@ class KRequest
   
   public static function accept($type = null)
   {
-    if (!isset(self::$_accept) && isset($_SERVER['HTTP_ACCEPT']))
+    if(!isset(self::$_accept) && isset($_SERVER['HTTP_ACCEPT']))
     {
       $accept = KRequest::get('server.HTTP_ACCEPT', 'string');
       self::$_accept['format'] = self::_parseAccept($accept);
 
-      if (isset($_SERVER['HTTP_ACCEPT_ENCODING'])) {
+      if(isset($_SERVER['HTTP_ACCEPT_ENCODING'])) {
         $accept = KRequest::get('server.HTTP_ACCEPT_ENCODING', 'string');
         self::$_accept['encoding'] = self::_parseAccept($accept);
       }
 
-      if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+      if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
         $accept = KRequest::get('server.HTTP_ACCEPT_LANGUAGE', 'string');
         self::$_accept['language'] = self::_parseAccept($accept);
       } 
@@ -216,13 +215,13 @@ class KRequest
   {
     if(!isset(self::$_url))
     {
-       if (!empty ($_SERVER['PHP_SELF']) && !empty ($_SERVER['REQUEST_URI']))
+       if(!empty ($_SERVER['PHP_SELF']) && !empty ($_SERVER['REQUEST_URI']))
          $url = self::protocol().'://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
        else
        {
         $url = self::protocol().'://'. $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
 
-        if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) 
+        if(isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) 
           $url .= '?' . $_SERVER['QUERY_STRING'];        
        }
 
@@ -237,7 +236,7 @@ class KRequest
   {
     if(!isset(self::$_base))
     {
-      if (strpos(php_sapi_name(), 'cgi') !== false && !ini_get('cgi.fix_pathinfo')  && !empty($_SERVER['REQUEST_URI']))   
+      if(strpos(php_sapi_name(), 'cgi') !== false && !ini_get('cgi.fix_pathinfo')  && !empty($_SERVER['REQUEST_URI']))   
         $path = $_SERVER['PHP_SELF'];
       else $path = $_SERVER['SCRIPT_NAME'];
   

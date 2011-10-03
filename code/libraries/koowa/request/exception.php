@@ -1,3 +1,3 @@
 <?php
 
-class KRequestException extends KException {}
+class KRequestException extends KException { }

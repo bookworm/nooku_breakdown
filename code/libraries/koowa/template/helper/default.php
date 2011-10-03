@@ -1,5 +1,3 @@
 <?php
 
-class KTemplateHelperDefault extends KTemplateHelperAbstract
-{ 
-}
+class KTemplateHelperDefault extends KTemplateHelperAbstract { }

@@ -3,17 +3,17 @@
 class KTemplateHelperGrid extends KTemplateHelperAbstract
 {
   public function checkbox($config = array())
-	{
+  {
     $config = new KConfig($config);
     $config->append(array(
-      'row'  		=> null,
+      'row'     => null,
     ));
 
     if($config->row->isLockable() && $config->row->locked())
     {
       $html = '<span class="editlinktip hasTip" title="'.$config->row->lockMessage() .'">
-    			<img src="media://lib_koowa/images/locked.png"/>
-    		</span>';
+          <img src="media://lib_koowa/images/locked.png"/>
+        </span>';
     }
     else
     {
@@ -26,75 +26,75 @@ class KTemplateHelperGrid extends KTemplateHelperAbstract
   }    
   
   public function search($config = array())
-	{
+  {
     $config = new KConfig($config);
     $config->append(array(
       'search' => null
     ));    
-	    
+      
     $html = '<input name="search" id="search" value="'.$config->search.'" />';
     $html .= '<button>'.JText::_('Go').'</button>';
     $html .= '<button onclick="document.getElementById(\'search\').value=\'\';this.form.submit();">'.JText::_('Reset').'</button>';
 
     return $html;     
-	}     
-	         
+  }     
+           
   public function checkall($config = array())
   {
-  	$config = new KConfig($config);
+    $config = new KConfig($config);
 
-  	$html = '<input type="checkbox" class="-koowa-grid-checkall" />';
-  	return $html;
+    $html = '<input type="checkbox" class="-koowa-grid-checkall" />';
+    return $html;
   } 
 
   public function sort( $config = array())
   {
-  	$config = new KConfig($config);
-  	$config->append(array(
-  		'title'   	=> '',
-  		'column'  	=> '',
-  		'direction' => 'asc',
-  		'sort'		=> ''
-  	));
+    $config = new KConfig($config);
+    $config->append(array(
+      'title'     => '',
+      'column'    => '',
+      'direction' => 'asc',
+      'sort'    => ''
+    ));
 
-  	if(empty($config->title)) 
-    	$config->title = ucfirst($config->column);
+    if(empty($config->title)) 
+      $config->title = ucfirst($config->column);
 
-  	$direction	= strtolower($config->direction);
-  	$direction 	= in_array($direction, array('asc', 'desc')) ? $direction : 'asc';
+    $direction  = strtolower($config->direction);
+    $direction  = in_array($direction, array('asc', 'desc')) ? $direction : 'asc';
 
-  	$class = '';
-  	if($config->column == $config->sort) {
-  		$direction = $direction == 'desc' ? 'asc' : 'desc'; // toggle
-  		$class = 'class="-koowa-'.$direction.'"';
-  	}
+    $class = '';
+    if($config->column == $config->sort) {
+      $direction = $direction == 'desc' ? 'asc' : 'desc'; // toggle
+      $class = 'class="-koowa-'.$direction.'"';
+    }
 
-  	$url = clone KRequest::url();
+    $url = clone KRequest::url();
 
-  	$query 			        = $url->getQuery(1);
-  	$query['sort']   		= $config->column;
-  	$query['direction'] = $direction;
-  	$url->setQuery($query);
+    $query              = $url->getQuery(1);
+    $query['sort']      = $config->column;
+    $query['direction'] = $direction;
+    $url->setQuery($query);
 
-  	$html  = '<a href="'.JRoute::_('index.php?'.$url->getQuery()).'" title="'.JText::_('Click to sort by this column').'"  '.$class.'>';
-  	$html .= JText::_($config->title);
-  	$html .= '</a>';
+    $html  = '<a href="'.JRoute::_('index.php?'.$url->getQuery()).'" title="'.JText::_('Click to sort by this column').'"  '.$class.'>';
+    $html .= JText::_($config->title);
+    $html .= '</a>';
 
-  	return $html;
+    return $html;
   }   
   
   public function enable($config = array())
-	{
+  {
     $config = new KConfig($config);
     $config->append(array(
       'row'   => null,
-      'field'	=> 'enabled'
+      'field' => 'enabled'
     ))->append(array(
       'data' => array($config->field => $config->row->{$config->field})
     ));
 
     $img  = $config->row->{$config->field} ? 'enabled.png' : 'disabled.png';
-    $alt 	= $config->row->{$config->field} ? JText::_( 'Enabled' ) : JText::_( 'Disabled' );
+    $alt  = $config->row->{$config->field} ? JText::_( 'Enabled' ) : JText::_( 'Disabled' );
     $text = $config->row->{$config->field} ? JText::_( 'Disable Item' ) : JText::_( 'Enable Item' );
 
     $config->data->{$config->field} = $config->row->{$config->field} ? 0 : 1;
@@ -103,16 +103,16 @@ class KTemplateHelperGrid extends KTemplateHelperAbstract
     $html = '<img src="media://lib_koowa/images/'. $img .'" border="0" alt="'. $alt .'" data-action="edit" data-data="'.$data.'" title='.$text.' />';
 
     return $html;
-	} 
-	
-	public function order($config = array())
-	{
+  } 
+  
+  public function order($config = array())
+  {
     $config = new KConfig($config);
     $config->append(array(
-      'row'  	=> null,
-      'total'	=> null,
-      'field'	=> 'ordering',
-      'data'	=> array('order' => 0)     
+      'row'   => null,
+      'total' => null,
+      'field' => 'ordering',
+      'data'  => array('order' => 0)     
     ));
 
     $up   = 'media://lib_koowa/images/arrow_up.png';
@@ -135,13 +135,13 @@ class KTemplateHelperGrid extends KTemplateHelperAbstract
       $html .= '<img src="'.$down.'" border="0" alt="'.JText::_('Move down').'" data-action="edit" data-data="'.$downdata.'"/>';
 
     return $html;    
-	}  
-	
-	public function access($config = array())
- 	{
+  }  
+  
+  public function access($config = array())
+  {
     $config = new KConfig($config);
     $config->append(array(
-    	'row'   => null,
+      'row'   => null,
       'field' => 'access'
     ))->append(array(
       'data' => array($config->field => $config->row->{$config->field})
@@ -149,23 +149,23 @@ class KTemplateHelperGrid extends KTemplateHelperAbstract
 
     switch($config->row->{$config->field})
     {
-    	case 0: {
-    		$color   = 'green';
-    		$group   = JText::_('Public');
-    		$access  = 1;
-    	} break;
+      case 0: {
+        $color   = 'green';
+        $group   = JText::_('Public');
+        $access  = 1;
+      } break;
 
-    	case 1: {
-    		$color   = 'red';
-    		$group   = JText::_('Registered');
-    		$access  = 2;
-    	} break;
+      case 1: {
+        $color   = 'red';
+        $group   = JText::_('Registered');
+        $access  = 2;
+      } break;
 
-    	case 2: {
-    		$color   = 'black';
-    		$group   = JText::_('Special');
-    		$access  = 0;
-    	} break;
+      case 2: {
+        $color   = 'black';
+        $group   = JText::_('Special');
+        $access  = 0;
+      } break;
 
     }
 

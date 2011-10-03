@@ -2,8 +2,8 @@
 
 class KTemplateFilterShorttag extends KTemplateFilterAbstract implements KTemplateFilterRead
 {
-	public function read(&$text)
-	{
+  public function read(&$text)
+  {
     if (!ini_get('short_open_tag')) 
     {
       $find = '/\<\?\s*=\s*(.*?)/';
@@ -16,5 +16,5 @@ class KTemplateFilterShorttag extends KTemplateFilterAbstract implements KTempla
     }
 
     return $this;   
-	}
+  }
 }

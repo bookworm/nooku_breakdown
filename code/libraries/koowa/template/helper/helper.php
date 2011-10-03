@@ -6,7 +6,8 @@ class KTemplateHelper
   {       
     if(!($helper instanceof KTemplateHelperInterface))
     {   
-      $identifier = $helper;
+      $identifier = $helper;      
+      
       if(is_string($identifier) && strpos($identifier, '.') === false) 
         $identifier = 'com.default.template.helper.'.trim($identifier);
 

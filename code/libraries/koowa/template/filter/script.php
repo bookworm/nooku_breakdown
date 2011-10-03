@@ -5,34 +5,34 @@ class KTemplateFilterScript extends KTemplateFilterAbstract implements KTemplate
   protected function _initialize(KConfig $config)
   {
     $config->append(array(
-      'priority'   => KCommand::PRIORITY_LOW,
+      'priority' => KCommand::PRIORITY_LOW,
     ));
 
     parent::_initialize($config);
   }             
   
   public function write(&$text)
-	{
+  {
     $scripts = $this->_parseScripts($text);
     $text = $scripts.$text;
 
     return $this;   
-	}  
-	
-	protected function _parseScripts(&$text)
-	{
+  }  
+  
+  protected function _parseScripts(&$text)
+  {
     $scripts = '';
 
     $matches = array();    
     
     if(preg_match_all('#<script(?!\s+inline\s*)\s+src="([^"]+)"(.*)/>#siU', $text, $matches))
     {
-    foreach(array_unique($matches[1]) as $key => $match) {
-      $attribs = $this->_parseAttributes( $matches[2][$key]);
-      $scripts .= $this->_renderScript($match, true, $attribs);
-    }
+      foreach(array_unique($matches[1]) as $key => $match) {
+        $attribs = $this->_parseAttributes( $matches[2][$key]);
+        $scripts .= $this->_renderScript($match, true, $attribs);
+      }
 
-    $text = str_replace($matches[0], '', $text);
+      $text = str_replace($matches[0], '', $text);
     }
 
     $matches = array();        
@@ -50,10 +50,10 @@ class KTemplateFilterScript extends KTemplateFilterAbstract implements KTemplate
     $text = preg_replace('#<script\s*(?:inline="true"|inline)\s*#siU', '<script', $text);
 
     return $scripts; 
-	}
-	
-	protected function _renderScript($script, $link, $attribs = array())
-	{
+  }
+  
+  protected function _renderScript($script, $link, $attribs = array())
+  {
     $attribs = KHelperArray::toString($attribs);
 
     if(!$link)
@@ -65,5 +65,5 @@ class KTemplateFilterScript extends KTemplateFilterAbstract implements KTemplate
     else $html = '<script type="text/javascript" src="'.$script.'" '.$attribs.'></script>'."\n";
 
     return $html; 
-	}
+  }
 }

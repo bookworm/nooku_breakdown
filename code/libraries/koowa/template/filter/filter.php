@@ -2,11 +2,11 @@
 
 class KTemplateFilter
 {
-	const MODE_READ  = 1;
-	const MODE_WRITE = 2; 
-	
-	public static function factory($filter, $config = array())
-	{		
+  const MODE_READ  = 1;
+  const MODE_WRITE = 2; 
+  
+  public static function factory($filter, $config = array())
+  {   
     if(!($filter instanceof KTemplateFilterInterface))
     {   
       if(is_string($filter) && strpos($filter, '.') === false)
@@ -21,5 +21,5 @@ class KTemplateFilter
     }
 
     return $filter; 
-	}
+  }
 }
