@@ -2,16 +2,16 @@
 
 class KEventDispatcher extends KObject
 {
-	protected $_listeners; 
+  protected $_listeners; 
   protected $_event = null;  
   
   public function __construct(KConfig $config = null) 
-	{
+  {
     parent::__construct($config);
     $this->_listeners = array();  
-	}               
-	
-	public function dispatchEvent($name, $event = array())
+  }               
+  
+  public function dispatchEvent($name, $event = array())
   {
     $result = array();
   
