@@ -82,9 +82,9 @@ class KControllerBehaviorCommandable extends KControllerBehaviorAbstract
       if($saveable)
       {
         $this->getToolbar()
-             ->setTitle($title)
-             ->addCommand('save')
-             ->addCommand('apply');
+          ->setTitle($title)
+          ->addCommand('save')
+          ->addCommand('apply');    
       }
    
       $this->getToolbar()->addCommand('cancel',  array('attribs' => array('data-novalidate' => 'novalidate')));        
@@ -98,7 +98,7 @@ class KControllerBehaviorCommandable extends KControllerBehaviorAbstract
       if($this->canAdd()) 
       {
         $identifier = $context->caller->getIdentifier();
-        $config     = array('attribs' => array(
+        $config = array('attribs' => array(
           'href' => JRoute::_( 'index.php?option=com_'.$identifier->package.'&view='.$identifier->name)
         ));
 
