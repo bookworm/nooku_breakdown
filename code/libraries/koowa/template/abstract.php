@@ -2,9 +2,9 @@
 
 abstract class KTemplateAbstract extends KObject implements KObjectIdentifiable
 {
-	protected $_path;
-	protected $_data = array();
-	protected $_contents = '';
+  protected $_path;
+  protected $_data = array();
+  protected $_contents = '';
   protected $_filters = array();
   protected $_view;
   protected $_stack; 
@@ -32,10 +32,10 @@ abstract class KTemplateAbstract extends KObject implements KObjectIdentifiable
 
     register_shutdown_function(array($this, '__destroy')); 
     $this->mixin(new KMixinCommandchain($config->append(array('mixer' => $this))));
-	}   
-	
-	public function __destroy()
-	{
+  }   
+  
+  public function __destroy()
+  {
     if(!$this->getStack()->isEmpty())
     {
       if($error = error_get_last()) 
@@ -46,14 +46,14 @@ abstract class KTemplateAbstract extends KObject implements KObjectIdentifiable
         } 
       } 
     }
-	}  
-	
-	protected function _initialize(KConfig $config)
+  }  
+  
+  protected function _initialize(KConfig $config)
   {
     $config->append(array(
-      'stack'			       => KFactory::get('lib.koowa.template.stack'),
-      'view'			       => null,
-      'command_chain' 	 => new KCommandChain(),
+      'stack'            => KFactory::get('lib.koowa.template.stack'),
+      'view'             => null,
+      'command_chain'    => new KCommandChain(),
       'dispatch_events'  => false,
       'enable_callbacks' => false,      
     ));
@@ -62,24 +62,24 @@ abstract class KTemplateAbstract extends KObject implements KObjectIdentifiable
   }
   
   public function getIdentifier()
-	{
-		return $this->_identifier;
-	}
-	
-	public function getPath()
-	{
+  {
+    return $this->_identifier;
+  }
+  
+  public function getPath()
+  {
     return $this->_path;
-	}
-	
-	public function getStack()
-	{
+  }
+  
+  public function getStack()
+  {
     return $this->_stack;
-	} 
-	
-	public function getView()
-	{
+  } 
+  
+  public function getView()
+  {
     if(!$this->_view instanceof KViewAbstract)
-    {	   
+    {    
       if(!($this->_view instanceof KIdentifier))
         $this->setView($this->_view);
 
@@ -87,17 +87,17 @@ abstract class KTemplateAbstract extends KObject implements KObjectIdentifiable
     }
 
     return $this->_view; 
-	}     
-	
-	public function setView($view)
-	{
+  }     
+  
+  public function setView($view)
+  {
     if(!($view instanceof KViewAbstract))
     {
       if(is_string($view) && strpos($view, '.') === false) 
       {
-        $identifier			  = clone $this->_identifier;
-        $identifier->path	= array('view', $view);
-        $identifier->name	= KRequest::format() ? KRequest::format() : 'html';  
+        $identifier       = clone $this->_identifier;
+        $identifier->path = array('view', $view);
+        $identifier->name = KRequest::format() ? KRequest::format() : 'html';  
       }
       else $identifier = KFactory::identify($view);
 
@@ -110,10 +110,10 @@ abstract class KTemplateAbstract extends KObject implements KObjectIdentifiable
     $this->_view = $view;
 
     return $this;     
-	}    
-	
-	public function loadIdentifier($template, $data = array(), $process = true)
-	{
+  }    
+  
+  public function loadIdentifier($template, $data = array(), $process = true)
+  {
     $identifier = KFactory::identify($template);
 
     if($identifier->filepath)
@@ -129,49 +129,49 @@ abstract class KTemplateAbstract extends KObject implements KObjectIdentifiable
     $this->loadFile($file, $data, $process);
 
     return $this;     
-	} 
-	
-	public function loadFile($file, $data = array(), $process = true)
-	{
+  } 
+  
+  public function loadFile($file, $data = array(), $process = true)
+  {
     $this->_path  = $file;
     $contents = file_get_contents($file);
     $this->loadString($contents, $data, $process);
 
     return $this;  
-	}        
-	
-	public function loadString($string, $data = array(), $process = true)
-	{
+  }        
+  
+  public function loadString($string, $data = array(), $process = true)
+  {
     $this->_contents = $string;
 
     $this->_data = array_merge((array) $this->_data, $data);
     if($process == true) $this->__sandbox();
 
     return $this;   
-	}         
-	
-	public function render()
-	{	
+  }         
+  
+  public function render()
+  { 
     $context = $this->getCommandContext();
     $context->data = $this->_contents;
 
     $result = $this->getCommandChain()->run(KTemplateFilter::MODE_WRITE, $context);
 
     return $context->data;        
-	}
-	
-	public function parse()
-	{	
+  }
+  
+  public function parse()
+  { 
     $context = $this->getCommandContext();
     $context->data = $this->_contents;
 
     $result = $this->getCommandChain()->run(KTemplateFilter::MODE_READ, $context);
 
     return $context->data;   
-	}             
-	
-	public function addFilter($filters)
- 	{
+  }             
+  
+  public function addFilter($filters)
+  {
     $filters =  (array) KConfig::toData($filters);
 
     foreach($filters as $filter)
@@ -187,20 +187,20 @@ abstract class KTemplateAbstract extends KObject implements KObjectIdentifiable
     }
 
     return $this;    
- 	}   
- 	
- 	public function getFilters()
- 	{
- 		return $this->_filters;
- 	}
+  }   
+  
+  public function getFilters()
+  {
+    return $this->_filters;
+  }
 
- 	public function getFilter($identifier)
- 	{
- 		return isset($this->_filters[$identifier]) ? $this->_filters[$identifier] : null;
- 	} 
- 	
- 	public function findFile($file)
-	{    
+  public function getFilter($identifier)
+  {
+    return isset($this->_filters[$identifier]) ? $this->_filters[$identifier] : null;
+  } 
+  
+  public function findFile($file)
+  {    
     $result = false;
     $path   = dirname($file);
 
@@ -213,39 +213,39 @@ abstract class KTemplateAbstract extends KObject implements KObjectIdentifiable
       $result = $file;
 
     return $result;
-	}
-	
-	public function renderHelper($identifier, $params = array())
-	{
-		$parts    = explode('.', $identifier);
-		$function = array_pop($parts);
-		
-		$helper = $this->getHelper(implode('.', $parts));
-		
-		if(!is_callable( array( $helper, $function ) )) {
-			throw new KTemplateHelperException( get_class($helper).'::'.$function.' not supported.' );
-		}	
-		
-		return $helper->$function($params);
-	}     
-	
-	public function getHelper($helper)
-	{	
-		if(is_string($helper) && strpos($helper, '.') === false ) 
-		{
+  }
+  
+  public function renderHelper($identifier, $params = array())
+  {
+    $parts    = explode('.', $identifier);
+    $function = array_pop($parts);
+    
+    $helper = $this->getHelper(implode('.', $parts));
+    
+    if(!is_callable( array( $helper, $function ) )) {
+      throw new KTemplateHelperException( get_class($helper).'::'.$function.' not supported.' );
+    } 
+    
+    return $helper->$function($params);
+  }     
+  
+  public function getHelper($helper)
+  { 
+    if(is_string($helper) && strpos($helper, '.') === false ) 
+    {
       $identifier = clone $this->getIdentifier();
       $identifier->path = array('template','helper');
       $identifier->name = $helper;      
-		}
-		else $identifier = KFactory::identify($helper);
-	 
-		$helper = KTemplateHelper::factory($identifier, array('template' => $this));
-		
-		return $helper;
-	}    
-	
-	private function __sandbox()
-	{	
+    }
+    else $identifier = KFactory::identify($helper);
+   
+    $helper = KTemplateHelper::factory($identifier, array('template' => $this));
+    
+    return $helper;
+  }    
+  
+  private function __sandbox()
+  { 
     set_error_handler(array($this, 'sandboxError'), E_WARNING | E_NOTICE);
     $this->getStack()->push(clone $this);
     extract($this->_data, EXTR_SKIP); 
@@ -258,8 +258,8 @@ abstract class KTemplateAbstract extends KObject implements KObjectIdentifiable
     restore_error_handler();
 
     return $this;   
-	}  
-	
+  }  
+  
   public function sandboxError($code, $message, $file = '', $line = 0, $context = array())
   {
     if($file == 'tmpl://lib.koowa.template.stack') 
@@ -276,15 +276,15 @@ abstract class KTemplateAbstract extends KObject implements KObjectIdentifiable
     return false;   
   }     
 
-	public function __toString()
-	{
+  public function __toString()
+  {
     try {
       $result = $this->_contents;
     } 
     catch (Exception $e) {
       $result = $e->getMessage();
     }   
-			
-		return $result;
-	}
+      
+    return $result;
+  }
 }

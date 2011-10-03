@@ -5,15 +5,15 @@ class KViewHtml extends KViewTemplate
   protected function _initialize(KConfig $config)
   {
     $config->append(array(
-      'mimetype'	  		 => 'text/html',
+      'mimetype'         => 'text/html',
       'template_filters' => array('form'),
     ));
 
     parent::_initialize($config); 
   }   
-	
-	public function display()
-	{
+  
+  public function display()
+  {
     if(empty($this->output))
     {
       $model = $this->getModel();
@@ -25,13 +25,13 @@ class KViewHtml extends KViewTemplate
         $name  = $this->getName();
 
         if(KInflector::isPlural($name)) {
-          $this->assign($name, 	$model->getList())
-            ->assign('total',	$model->getTotal());   
+          $this->assign($name,  $model->getList())
+            ->assign('total', $model->getTotal());   
         }
         else $this->assign($name, $model->getItem());    
       }  
     }
 
     return parent::display();  
-	}
+  }
 }

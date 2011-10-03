@@ -3,12 +3,12 @@
 abstract class KViewAbstract extends KObject implements KObjectIdentifiable
 {
   protected $_model;
-	public $output = '';
-	public $mimetype = '';
-	protected $_layout;
+  public $output = '';
+  public $mimetype = '';
+  protected $_layout;
   
   public function __construct(KConfig $config = null)
-	{
+  {
     if(!isset($config)) $config = new KConfig();
 
     parent::__construct($config);
@@ -17,13 +17,13 @@ abstract class KViewAbstract extends KObject implements KObjectIdentifiable
     $this->mimetype = $config->mimetype;
     $this->setModel($config->model);
     $this->setLayout($config->layout);     
-	}       
-	
-	protected function _initialize(KConfig $config)
+  }       
+  
+  protected function _initialize(KConfig $config)
   {
     $config->append(array(
       'model'    => $this->getName(),
-      'output'	 => '',
+      'output'   => '',
       'mimetype' => '',
       'layout'   => 'default',          
     ));
@@ -32,28 +32,28 @@ abstract class KViewAbstract extends KObject implements KObjectIdentifiable
   }   
   
   public function getIdentifier()
-	{
-		return $this->_identifier;
-	}
+  {
+    return $this->_identifier;
+  }
 
-	public function getName()
-	{
-		$total = count($this->_identifier->path);
-		return $this->_identifier->path[$total - 1];
-	}
+  public function getName()
+  {
+    $total = count($this->_identifier->path);
+    return $this->_identifier->path[$total - 1];
+  }
 
-	public function getFormat()
-	{
-		return $this->_identifier->name;
-	}
+  public function getFormat()
+  {
+    return $this->_identifier->name;
+  }
 
-	public function display()
-	{
-		return $this->output;
-	} 
-	
-	public function getModel()
-	{
+  public function display()
+  {
+    return $this->output;
+  } 
+  
+  public function getModel()
+  {
     if(!$this->_model instanceof KModelAbstract) 
     {
       if(!($this->_model instanceof KIdentifier))
@@ -63,10 +63,10 @@ abstract class KViewAbstract extends KObject implements KObjectIdentifiable
     }
 
     return $this->_model;   
-	}    
-	
+  }    
+  
   public function setModel($model)
-	{
+  {
     if(!($model instanceof KModelAbstract))
     {
       if(is_string($model) && strpos($model, '.') === false ) 
@@ -74,9 +74,9 @@ abstract class KViewAbstract extends KObject implements KObjectIdentifiable
         if(KInflector::isSingular($model)) 
           $model = KInflector::pluralize($model);
 
-        $identifier			= clone $this->_identifier;
-        $identifier->path	= array('model');
-        $identifier->name	= $model;
+        $identifier     = clone $this->_identifier;
+        $identifier->path = array('model');
+        $identifier->name = $model;
       }
       else $identifier = KFactory::identify($model);
 
@@ -89,8 +89,8 @@ abstract class KViewAbstract extends KObject implements KObjectIdentifiable
     $this->_model = $model;
 
     return $this;    
-	}  
-	
+  }  
+  
   public function getLayout()
   {
     return $this->_layout;
@@ -103,54 +103,54 @@ abstract class KViewAbstract extends KObject implements KObjectIdentifiable
   }     
   
   public function createRoute( $route = '')
-	{
+  {
     $route = trim($route);
 
     if($route == 'index.php' || $route == 'index.php?') {
-    	$result = $route;
+      $result = $route;
     } 
     else if (substr($route, 0, 1) == '&') 
     {
-    	$url   = clone KRequest::url();
-    	$vars  = array();
-    	parse_str($route, $vars);
-	
-    	$url->setQuery(array_merge($url->getQuery(true), $vars));
-	
-    	$result = 'index.php?'.$url->getQuery();
+      $url   = clone KRequest::url();
+      $vars  = array();
+      parse_str($route, $vars);
+  
+      $url->setQuery(array_merge($url->getQuery(true), $vars));
+  
+      $result = 'index.php?'.$url->getQuery();
     }
     else 
     {
-    	if(substr($route, 0, 10) == 'index.php?') 
-    		$route = substr($route, 10);
+      if(substr($route, 0, 10) == 'index.php?') 
+        $route = substr($route, 10);
 
-    	$parts = array();
-    	parse_str($route, $parts);
-    	$result = array();
+      $parts = array();
+      parse_str($route, $parts);
+      $result = array();
 
-    	if(!isset($parts['option'])) 
-    		$result[] = 'option=com_'.$this->_identifier->package;
+      if(!isset($parts['option'])) 
+        $result[] = 'option=com_'.$this->_identifier->package;
 
-    	if(!isset($parts['view']))
-    	{
-    		$result[] = 'view='.$this->getName();
-    		if(!isset($parts['layout']) && $this->_layout != $this->_layout_default)
-    			$result[] = 'layout='.$this->getLayout();
-    	}
-	
-    	if(!isset($parts['format']) && $this->_identifier->name != 'html')
-    		$result[] = 'format='.$this->_identifier->name;
+      if(!isset($parts['view']))
+      {
+        $result[] = 'view='.$this->getName();
+        if(!isset($parts['layout']) && $this->_layout != $this->_layout_default)
+          $result[] = 'layout='.$this->getLayout();
+      }
+  
+      if(!isset($parts['format']) && $this->_identifier->name != 'html')
+        $result[] = 'format='.$this->_identifier->name;
 
-    	if(!empty($route)) $result[] = $route;
+      if(!empty($route)) $result[] = $route;
 
-    	$result = 'index.php?'.implode('&', $result);
+      $result = 'index.php?'.implode('&', $result);
     }
 
     return JRoute::_($result); 
-	}
+  }
 
-	public function __toString()
-	{
+  public function __toString()
+  {
     return $this->display();
-	}
+  }
 }

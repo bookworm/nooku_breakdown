@@ -2,25 +2,25 @@
 
 class KViewCsv extends KViewFile
 {
-	public $quote = '"';
-	public $separator = ',';
-	public $eol = "\n";     
-	
-	protected function _initialize(KConfig $config)
-	{
+  public $quote = '"';
+  public $separator = ',';
+  public $eol = "\n";     
+  
+  protected function _initialize(KConfig $config)
+  {
     $config->append(array(
-      'mimetype'	  => 'text/csv',
+      'mimetype'    => 'text/csv',
       'disposition' => 'inline',
-      'quote'		    => '"',
+      'quote'       => '"',
       'separator'   => ',',
-      'eol'		      => "\n" 
+      'eol'         => "\n" 
     ));            
 
     parent::_initialize($config);    
   } 
   
   public function display()
-	{
+  {
     $rows    = '';
     $columns = array();
     $rowset  = $this->getModel()->getList();
@@ -45,7 +45,7 @@ class KViewCsv extends KViewFile
     $this->output = $header.$rows;
 
     return parent::display();       
-	}   
+  }   
        
   protected function _arrayToString($data)
   {
@@ -57,7 +57,7 @@ class KViewCsv extends KViewFile
 
       if($this->_quoteValue($value)) { 
         $quoted_value = str_replace($this->quote, $this->quote.$this->quote, $value);
-        $fields[] 	  = $this->quote . $quoted_value . $this->quote;    
+        $fields[]     = $this->quote . $quoted_value . $this->quote;    
       } 
       else $fields[] = $value; 
     }
@@ -74,7 +74,7 @@ class KViewCsv extends KViewFile
     if(strpos($value, $this->quote) !== false) return true;
 
     if (strpos($value, "\n") !== false || strpos($value, "\r") !== false ) 
-    	return true;
+      return true;
 
     if(substr($value, 0, 1) == " " || substr($value, -1) == " ") return true;
 
