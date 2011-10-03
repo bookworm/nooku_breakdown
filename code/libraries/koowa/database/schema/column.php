@@ -2,19 +2,19 @@
 
 class KDatabaseSchemaColumn extends KObject
 {
-	public $name;
-	public $type;
-	public $length;
-	public $scope;
-	public $default;		
-	public $required = false;
-	public $primary = false;
-	public $autoinc = false;
-	public $unique = false;
-	public $related = array();
-	protected $_filter;       
-	
-	public function __set($key, $value)
+  public $name;
+  public $type;
+  public $length;
+  public $scope;
+  public $default;    
+  public $required = false;
+  public $primary = false;
+  public $autoinc = false;
+  public $unique = false;
+  public $related = array();
+  protected $_filter;       
+  
+  public function __set($key, $value)
   {
     if($key == 'filter') 
       $this->_filter = $value;
