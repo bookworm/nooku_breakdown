@@ -97,7 +97,7 @@ class KMixinCallback extends KMixinAbstract implements KCommandInterface
     {
       $command = strtolower($command);
 
-      if (isset($this->_callbacks[$command]) ) 
+      if(isset($this->_callbacks[$command])) 
       {
         $key = array_search($callback, $this->_callbacks[$command], true);
         unset($this->_callbacks[$command][$key]);
