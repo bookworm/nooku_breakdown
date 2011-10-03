@@ -4,14 +4,12 @@ class KFilterTrim extends KFilterAbstract
 {
   protected $_charList = null;
 
-
   public function __construct(KConfig $config)
   {
     parent::__construct($config);
   
     if(isset($config->char_list)) $this->_charList = $config->char_list;
   }
-
 
   public function getCharList()
   {

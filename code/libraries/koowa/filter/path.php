@@ -2,8 +2,8 @@
 
 class KFilterPath extends KFilterAbstract
 {
-	const PATTERN = '#^(?:[a-z]:/|~*/)[a-z0-9_\.-\s/~]*$#i';  
-	
+  const PATTERN = '#^(?:[a-z]:/|~*/)[a-z0-9_\.-\s/~]*$#i';  
+  
   protected function _validate($value)
   {
     $value = trim(str_replace('\\', '/', $value));

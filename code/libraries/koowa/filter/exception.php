@@ -1,3 +1,3 @@
 <?php
 
-class KFilterException extends KException {}
+class KFilterException extends KException { }
