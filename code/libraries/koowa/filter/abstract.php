@@ -46,47 +46,47 @@ abstract class KFilterAbstract implements KFilterInterface
   }
   
   public final function sanitize($data)
-	{
-		if($this->_walk && (is_array($data) || is_object($data))) 
-		{
-			$arr = (array)$data;
-				
-			foreach($arr as $key => $value) 
-			{
-				if(is_array($data)) 
-					$data[$key] = $this->sanitize($value);
-				
-				if(is_object($data)) 
-					$data->$key = $this->sanitize($value);	
-			}
-		}
-		else
-		{
-			$context = $this->_chain->getContext();
-			$context->data = $data;
-			
-			$data = $this->_chain->run('sanitize', $context);
-		}
-		
-		return $data;
-	}     
-	
-	public function addFilter(KFilterInterface $filter, $priority = null)
-	{	
-		$this->_chain->enqueue($filter, $priority);
-		return $this;
-	}
-	
-	public function getHandle()
-	{
-		return spl_object_hash( $this );
-	}
+  {
+    if($this->_walk && (is_array($data) || is_object($data))) 
+    {
+      $arr = (array)$data;
+        
+      foreach($arr as $key => $value) 
+      {
+        if(is_array($data)) 
+          $data[$key] = $this->sanitize($value);
+        
+        if(is_object($data)) 
+          $data->$key = $this->sanitize($value);  
+      }
+    }
+    else
+    {
+      $context = $this->_chain->getContext();
+      $context->data = $data;
+      
+      $data = $this->_chain->run('sanitize', $context);
+    }
+    
+    return $data;
+  }     
+  
+  public function addFilter(KFilterInterface $filter, $priority = null)
+  { 
+    $this->_chain->enqueue($filter, $priority);
+    return $this;
+  }
+  
+  public function getHandle()
+  {
+    return spl_object_hash( $this );
+  }
 
-	public function getPriority()
-	{
-		return KCommand::PRIORITY_NORMAL;
-	}   
-	
-	abstract protected function _validate($value);
-	abstract protected function _sanitize($value);
+  public function getPriority()
+  {
+    return KCommand::PRIORITY_NORMAL;
+  }   
+  
+  abstract protected function _validate($value);
+  abstract protected function _sanitize($value);
 }
