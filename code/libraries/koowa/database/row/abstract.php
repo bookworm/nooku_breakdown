@@ -174,7 +174,7 @@ abstract class KDatabaseRowAbstract extends KObjectArray implements KDatabaseRow
   }  
   
   public function __call($method, array $arguments)
-	{
+  {
     $parts = KInflector::explode($method);
 
     if($parts[0] == 'is' && isset($parts[1]))
@@ -186,5 +186,5 @@ abstract class KDatabaseRowAbstract extends KObjectArray implements KDatabaseRow
     }
 
     return parent::__call($method, $arguments);       
-	}
+  }
 }
