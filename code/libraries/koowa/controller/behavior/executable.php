@@ -4,14 +4,14 @@ class KControllerBehaviorExecutable extends KControllerBehaviorAbstract
 {
   protected $_readonly;
   
-	public function __construct( KConfig $config) 
-	{
+  public function __construct( KConfig $config) 
+  {
     parent::__construct($config);
 
     $this->_readonly = (bool) $config->readonly;   
-	}      
-	
-	protected function _initialize(KConfig $config)
+  }      
+  
+  protected function _initialize(KConfig $config)
   {
     $config->append(array(
       'priority'   => KCommand::PRIORITY_HIGH,
